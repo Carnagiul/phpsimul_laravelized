@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\User;
 
+use App\Http\Controllers\UserInterface;
 use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Support\Facades\Auth;
@@ -40,5 +41,13 @@ class Create extends TestCase
         ]);
         $user->delete();
         $response->assertStatus(302);
+    }
+
+    public function test_accessibility_login_match()
+    {
+        $user = UserFactory::new()->create();
+        $object = app(UserInterface::class)->matchUser($user->email, 'password');
+        $response = $this->assertEquals($user->id, $object->id);
+        $user->delete();
     }
 }
