@@ -29,4 +29,22 @@ class WorldInterface extends Controller
     public function createWorldSimplified(String $name, Carbon $registerAt, Carbon $openAt) {
         return $this->createWorldWithoutDescription($name, $registerAt, $openAt, null);
     }
+
+    public function canView(World $world) {
+        if ($world->close_at == null) {
+            if ($world->register_at == null) {
+                return false;
+            }
+            return $world->register_at->isPast();
+        }
+
+        if ($world->close_at->isPast()) {
+            return false;
+        }
+        return true;
+    }
+
+    public function isDevWorld(World $world) {
+        return $this->canView($world) && $world->is_dev;
+    }
 }
