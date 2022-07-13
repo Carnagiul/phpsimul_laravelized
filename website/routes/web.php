@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GuestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -27,10 +28,7 @@ Route::group([
     Route::get('/', function () {
         return view('welcome');
     })->name('home');
-    Route::get('/logout', function () {
-        Auth::logout();
-        return redirect(route('guest.home'));
-    })->name('logout');
+    Route::get('/logout', [GuestController::class, 'logout'])->name('logout');
 });
 
 
@@ -38,32 +36,11 @@ Route::group([
     'middleware' => ['guest'],
     'as' => 'guest.',
 ], function () {
-    Route::get('/', function () {
-        return view('welcome');
-    })->name('home');
-    Route::get('/register', function () {
-        return view('welcome');
-    })->name('register');
-    Route::post('/register', function () {
-        return view('welcome');
-    });
-    Route::get('/login', function () {
-        return view('welcome');
-    })->name('login');
-    Route::post('/login', function (Request $request) {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect(route('auth.home'));
-        }
-        return view('welcome');
-    })->name('login.post');
-    Route::get('/forget', function () {
-        return view('welcome');
-    });
-    Route::post('/forget', function () {
-        return view('welcome');
-    });
+    Route::get('/', [GuestController::class, 'home'])->name('home');
+    Route::get('/register', [GuestController::class, 'register'])->name('register');
+    Route::post('/register', [GuestController::class, 'registerConfirm'])->name('register.post');
+    Route::get('/login', [GuestController::class, 'login'])->name('login');
+    Route::post('/login', [GuestController::class, 'loginConfirm'])->name('login.post');
+    Route::get('/forget', [GuestController::class, 'forget'])->name('forget');
+    Route::post('/forget', [GuestController::class, 'forgetConfirm'])->name('forget.post');
 });
