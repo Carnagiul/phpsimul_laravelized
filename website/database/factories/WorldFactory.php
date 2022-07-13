@@ -14,11 +14,11 @@ class WorldFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word,
-            'description' => $this->faker->text,
-            'register_at' => $this->faker->dateTime,
-            'open_at' => $this->faker->dateTime,
-            'close_at' => $this->faker->dateTime,
+            'name' => 'fake World',
+            'description' => 'fake World description',
+            'register_at' => now()->subDays(10),
+            'open_at' => now()->addDays(10),
+            'close_at' => now()->addDays(100),
             //
         ];
     }
