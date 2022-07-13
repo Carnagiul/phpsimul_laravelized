@@ -10,6 +10,10 @@
         </testsuite>
         <testsuite name="Feature">
             <directory suffix="Test.php">./tests/Feature</directory>
+
+            <testsuite name="User">
+                <directory suffix="Create.php">./tests/Feature/User</directory>
+            </testsuite>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
