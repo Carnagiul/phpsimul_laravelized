@@ -16,6 +16,8 @@
             </testsuite>
             <testsuite name="World">
                 <directory suffix="Create.php">./tests/Feature/World</directory>
+                <directory suffix="Register.php">./tests/Feature/World</directory>
+                <directory suffix="Ressources.php">./tests/Feature/World</directory>
             </testsuite>
         </testsuite>
     </testsuites>

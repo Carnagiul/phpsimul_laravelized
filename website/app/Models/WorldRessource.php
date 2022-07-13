@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class World extends Model
+class WorldRessource extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    public static $morph = 'world';
+    public static $morph = 'world_ressource';
 
-    public function worldUsers() {
-        return $this->belongsToMany(WorldUser::class);
+    public function world() {
+        return $this->belongsTo(World::class);
     }
 }
