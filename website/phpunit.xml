@@ -14,6 +14,9 @@
             <testsuite name="User">
                 <directory suffix="Create.php">./tests/Feature/User</directory>
             </testsuite>
+            <testsuite name="World">
+                <directory suffix="Create.php">./tests/Feature/World</directory>
+            </testsuite>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
