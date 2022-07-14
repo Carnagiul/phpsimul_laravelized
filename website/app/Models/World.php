@@ -13,7 +13,13 @@ class World extends Model
 
     public static $morph = 'world';
 
-    public function worldUsers() {
+    public function worldUsers()
+    {
         return $this->belongsToMany(WorldUser::class);
+    }
+
+    public function buildings()
+    {
+        return $this->hasMany(WorldBuilding::class);
     }
 }
