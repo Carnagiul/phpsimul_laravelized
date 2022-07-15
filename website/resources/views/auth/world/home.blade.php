@@ -1,6 +1,6 @@
 @extends('layouts.app_auth_world')
 
-@section('title', 'World {{$world->name}} HomePage')
+@section('title', 'World HomePage')
 
 @section('page')
 
