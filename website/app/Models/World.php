@@ -13,9 +13,17 @@ class World extends Model
 
     public static $morph = 'world';
 
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
+        'register_at' => 'datetime',
+        'open_at' => 'datetime',
+        'close_at' => 'datetime',
+    ];
     public function worldUsers()
     {
-        return $this->belongsToMany(WorldUser::class);
+        return $this->belongsToMany(WorldUser::class, 'world_user');
     }
 
     public function buildings()

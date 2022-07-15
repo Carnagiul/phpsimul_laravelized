@@ -13,6 +13,8 @@ class CreateWorldBuildingEvolutionsTable extends Migration
      */
     public function up()
     {
+        $this->down();
+
         Schema::create('world_building_evolutions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('world_building_id');

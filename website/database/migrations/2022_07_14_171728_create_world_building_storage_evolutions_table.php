@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWorldBuildingProductionEvolutionsTable extends Migration
+class CreateWorldBuildingStorageEvolutionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,14 +15,14 @@ class CreateWorldBuildingProductionEvolutionsTable extends Migration
     {
         $this->down();
 
-        Schema::create('world_building_production_evolutions', function (Blueprint $table) {
+        Schema::create('world_building_storage_evolutions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('world_building_evolution_id');
             $table->unsignedBigInteger('world_ressource_id');
             $table->unsignedInteger('amount_per_hour');
             $table->unsignedInteger('amount_once');
-            $table->foreign('world_ressource_id', 'wr_id2')->references('id')->on('world_ressources')->onDelete('cascade');
-            $table->foreign('world_building_evolution_id', 'wbe_id2')->references('id')->on('world_building_evolutions')->onDelete('cascade');
+            $table->foreign('world_ressource_id', 'wr_id3')->references('id')->on('world_ressources')->onDelete('cascade');
+            $table->foreign('world_building_evolution_id', 'wbe_id3')->references('id')->on('world_building_evolutions')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ class CreateWorldBuildingProductionEvolutionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('world_building_production_evolutions');
+        Schema::dropIfExists('world_building_storage_evolutions');
     }
 }

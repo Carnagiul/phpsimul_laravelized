@@ -8,10 +8,11 @@ use Illuminate\Support\Facades\Hash;
 
 class UserInterface extends Controller
 {
-    public function createUser(String $email, String $password)
+    public function createUser(String $email, String $password, String $username)
     {
         $user = new User();
         $user->email = $email;
+        $user->name = $username;
         $user->password = Hash::make($password);
         $user->save();
 

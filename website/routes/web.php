@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\GuestController;
+use App\Http\Controllers\WorldController;
+use App\Models\World;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -26,9 +28,16 @@ Route::group([
     'prefix' => 'web',
 ], function () {
     Route::get('/', function () {
-        return view('welcome');
+        return view('auth.home');
     })->name('home');
     Route::get('/logout', [GuestController::class, 'logout'])->name('logout');
+    Route::group([
+        'as' => 'world.',
+        'prefix' => 'world{world}',
+    ], function () {
+        Route::get('/', [WorldController::class, 'home'])->name('home');
+        Route::get('/register', [WorldController::class, 'register'])->name('register');
+    });
 });
 
 
@@ -44,3 +53,4 @@ Route::group([
     Route::get('/forget', [GuestController::class, 'forget'])->name('forget');
     Route::post('/forget', [GuestController::class, 'forgetConfirm'])->name('forget.post');
 });
+

@@ -28,15 +28,17 @@ class WorldInterface extends Controller
         return $this->createWorldFull($name, $registerAt, $openAt, $closeAt, null);
     }
 
-    public function createWorldSimplified(String $name, Carbon $registerAt, Carbon $openAt) {
+    public function createWorldSimplified(String $name, Carbon $registerAt, Carbon $openAt)
+    {
         return $this->createWorldWithoutDescription($name, $registerAt, $openAt, null);
     }
 
-    public function canRegisterInWorld(World $world) {
+    public function canRegisterInWorld(World $world)
+    {
         if ($world->register_at == null) {
             return false;
         }
-        if (!$world->register_at->isPast()) {
+        if (!Carbon::parse($world->register_at)->isPast()) {
             return false;
         }
 
@@ -49,7 +51,8 @@ class WorldInterface extends Controller
         return true;
     }
 
-    public function canEnterInWorld(World $world) {
+    public function canEnterInWorld(World $world)
+    {
         if (!$this->canRegisterInWorld($world)) {
             return false;
         }
@@ -64,22 +67,26 @@ class WorldInterface extends Controller
         return true;
     }
 
-    public function userCanRegister(World $world, User $user) {
+    public function userCanRegister(World $world, User $user)
+    {
         return $this->canRegisterInWorld($world) && !$this->userExistInWorld($world, $user);
     }
 
-    public function userExistInWorld(World $world, User $user) {
+    public function userExistInWorld(World $world, User $user)
+    {
         return WorldUser::where('world_id', $world->id)->where('user_id', $user->id)->exists();
     }
 
-    public function addUserToWorld(World $world, User $user) {
+    public function addUserToWorld(World $world, User $user)
+    {
         WorldUser::create([
             'world_id' => $world->id,
             'user_id' => $user->id,
         ]);
     }
 
-    public function removeUserFromWorld(World $world, User $user) {
+    public function removeUserFromWorld(World $world, User $user)
+    {
         WorldUser::where('world_id', $world->id)->where('user_id', $user->id)->delete();
     }
 }

@@ -44,7 +44,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function worldUsers() {
-        return $this->belongsToMany(WorldUser::class);
+    public function worldUsers()
+    {
+        return $this->belongsToMany(WorldUser::class, 'world_user');
     }
 }

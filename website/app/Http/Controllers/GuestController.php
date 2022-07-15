@@ -10,38 +10,38 @@ class GuestController extends Controller
 {
     public function home()
     {
-        return view('welcome');
+        return view('guest.home');
     }
 
     public function register()
     {
-        return view('welcome');
+        return view('guest.register');
     }
 
     public function registerConfirm(Request $request)
     {
         $request->validate([
             'email' => 'required|email|unique:users',
+            'name' => 'required|unique:users',
             'password' => 'required|min:8',
-            'password_confirm' => 'required|min:8',
+            'password_confirmation' => 'required|min:8',
         ]);
-        if ($request->password === $request->password_confirm) {
-            app(UserInterface::class)->createUser($request->email, $request->password);
-
+        if ($request->password === $request->password_confirmation) {
+            app(UserInterface::class)->createUser($request->email, $request->password, $request->name);
             return redirect(route('guest.home'));
         }
-        return view('welcome');
+        return redirect(route('guest.register'));
     }
 
     public function login()
     {
-        return view('welcome');
+        return view('guest.login');
     }
 
     public function loginConfirm(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email',
             'password' => 'required|min:8',
         ]);
         $user = app(UserInterface::class)->matchUser($request->email, $request->password);

@@ -9,11 +9,13 @@ class WorldUser extends Pivot
     //
     public static $morph = "world_user";
 
-    public function world() {
+    public function world()
+    {
         return $this->belongsTo(World::class);
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

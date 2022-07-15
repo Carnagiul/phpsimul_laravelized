@@ -13,6 +13,8 @@ class CreateWorldRessourcesTable extends Migration
      */
     public function up()
     {
+        $this->down();
+
         Schema::create('world_ressources', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('world_id');
