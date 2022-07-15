@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 class WorldController extends Controller
 {
     //
-    public function home() {
-        dd("GG");
+    public function home(World $world) {
+        return view('auth.world.home', ['world' => $world]);
     }
 
     public function register(World $world) {
