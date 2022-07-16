@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(WorldUser::class, 'world_user');
     }
+
+    public function permissions()
+    {
+        return $this->belongsToMany(UserPermission::class);
+    }
 }
