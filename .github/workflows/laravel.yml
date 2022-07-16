@@ -40,6 +40,8 @@ jobs:
         mysql --version
         sudo apt-get install -y mysql-client
         mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uuser -psecret -e "SHOW DATABASES"
+    - name: Run Migrations
+      run: cd website && php artisan migrate
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_DATABASE: test_db
