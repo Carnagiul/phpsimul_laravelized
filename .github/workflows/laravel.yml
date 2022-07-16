@@ -25,11 +25,15 @@ jobs:
     - name: Directory Permissions
       run: cd website && chmod -R 777 storage bootstrap/cache
     - name: Create Database
-      run: cd website && |
-        mkdir -p database
-        touch database/database.sqlite
+    - name: Verify MySQL connection
+      run: |
+        mysql --version
+        sudo apt-get install -y mysql-client
+        mysql --host 127.0.0.1 --port ${{ job.services.mysql.p
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
-      run: cd website && vendor/bin/phpunit
+        MYSQL_DATABASE: test_db
+        DB_USERNAME: user
+        DB_PASSWORD: secret
+        DB_PORT: ${{ job.services.mysql.ports[3306] }}
+      run: cd website && php artisan test
