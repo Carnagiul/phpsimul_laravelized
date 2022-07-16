@@ -23,6 +23,11 @@ class WorldBuildingInterface extends Controller
         return $building;
     }
 
+    public function buildingExistInWorld(World $world, String $name)
+    {
+        return WorldBuilding::where('world_id', $world->id)->where('name', $name)->exists();
+    }
+
     public function deleteOldWorldBuildingEvolution(WorldBuilding $building)
     {
         $building->evolutions()->delete();

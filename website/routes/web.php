@@ -44,9 +44,38 @@ Route::group([
             'middleware' => ['admin'],
         ], function () {
             Route::get("/", [WorldAdminController::class, 'home'])->name('home');
+            Route::group([
+                'as' => 'buildings.',
+                'prefix' => 'buildings',
+            ], function () {
+                Route::get("/", [WorldAdminController::class, 'buildings'])->name('list');
+                Route::get("/create", [WorldAdminController::class, 'createNewBuilding'])->middleware('dev')->name('create');
+                Route::post("/create", [WorldAdminController::class, 'createNewBuildingConfirmation'])->middleware('dev')->name('create.post');
+                Route::group([
+                    'as' => 'actions.',
+                    'prefix' => 'building_{building}',
+                ], function() {
+                    Route::get("/", [WorldAdminController::class, 'viewBuilding'])->name('view');
+                    Route::get("/edit", [WorldAdminController::class, 'editBuilding'])->name('edit');
+                    Route::post("/edit", [WorldAdminController::class, 'editBuildingConfirmation'])->name('edit.post');
+                    Route::get("/delete", [WorldAdminController::class, 'deleteBuilding'])->name('delete');
+                    Route::post("/delete", [WorldAdminController::class, 'deleteBuildingConfirmation'])->name('delete.post');
+                    // Route::get("/updateTimer", [WorldAdminController::class, 'updateBuildingTimer'])->name('updateTimer');
+                    // Route::post("/updateTimer", [WorldAdminController::class, 'updateBuildingTimerConfirmation'])->name('updateTimer.post');
+                    // Route::get("/updateCost", [WorldAdminController::class, 'updateBuildingTimer'])->name('updateCost');
+                    // Route::post("/updateCost", [WorldAdminController::class, 'updateBuildingTimerConfirmation'])->name('updateCost.post');
+                    // Route::get("/updateProd", [WorldAdminController::class, 'updateBuildingTimer'])->name('updateProd');
+                    // Route::post("/updateProd", [WorldAdminController::class, 'updateBuildingTimerConfirmation'])->name('updateProd.post');
+                    // Route::get("/updateStorage", [WorldAdminController::class, 'updateBuildingTimer'])->name('updateStorage');
+                    // Route::post("/updateStorage", [WorldAdminController::class, 'updateBuildingTimerConfirmation'])->name('updateStorage.post');
+                    // Route::get("/updateRequirement", [WorldAdminController::class, 'updateBuildingTimer'])->name('updateRequirement');
+                    // Route::post("/updateRequirement", [WorldAdminController::class, 'updateBuildingTimerConfirmation'])->name('updateRequirement.post');
+                });
+            });
         });
     });
 });
+
 
 
 Route::group([

@@ -28,7 +28,25 @@
                     </li>
                     @if (Auth::user()->isAdmin())
                     <li class="nav-item">
-                        <a class="nav-link  @if (Route::is('auth.world.admin.home', $world->id)) active @endif" @if (Route::is('auth.world.admin.home', $world->id)) aria-current="page" @endif href="{{route('auth.world.admin.home', $world->id)}}">Administration</a>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-danger">Administration</button>
+                            <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="visually-hidden">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{route('auth.world.admin.home', $world->id)}}">Home</a></li>
+                                <li><a class="dropdown-item" href="{{route('auth.world.admin.buildings.list', $world->id)}}">Buildings</a></li>
+                              <li><a class="dropdown-item" href="#">Units</a></li>
+                              <li><a class="dropdown-item" href="#">Research</a></li>
+                              <li><a class="dropdown-item" href="#">Ressources</a></li>
+                              <li><hr class="dropdown-divider"></li>
+                              <li><a class="dropdown-item" href="#">Users</a></li>
+                              <li><a class="dropdown-item" href="#">Alliances</a></li>
+                              <li><a class="dropdown-item" href="#">Nodes</a></li>
+                              <li><hr class="dropdown-divider"></li>
+                              <li><a class="dropdown-item" href="#">Options</a></li>
+                            </ul>
+                          </div>
                       </li>
                     @endif
                 </ul>

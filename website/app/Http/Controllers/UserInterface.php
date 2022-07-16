@@ -35,7 +35,7 @@ class UserInterface extends Controller
         return UserPermission::where('user_id', $user->id)->where('permission_id', $permission->id)->exists();
     }
 
-    public function addPermissionToUser(User $user, Permission $permission): UserPermission
+    public function addPermissionToUser(User $user, Permission $permission): bool
     {
         return UserPermission::create(['user_id' => $user->id, 'permission_id' => $permission->id])->save();
     }

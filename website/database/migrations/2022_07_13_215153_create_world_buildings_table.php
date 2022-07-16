@@ -21,6 +21,7 @@ class CreateWorldBuildingsTable extends Migration
             $table->string('name');
             $table->longText('description')->nullable();
             $table->integer('max_level')->default(30)->comment('Maximal level of the building, if 0 then it is unlimited');
+            $table->integer('min_level')->default(0)->comment('Minimal level of the building, if 0 then building can be destroyed');
             $table->integer('default_level')->default(0)->comment('Default  level of the building when it is created on node');
             $table->timestamps();
             $table->softDeletes();
