@@ -50,11 +50,12 @@ class setUserToAdministrator extends Command
             $this->error('User not found');
             return 1;
         }
-        if (!Permission::where('permission', '=', 'administrate-all')->exist()) {
+        $permission = Permission::where('permission', '=', 'administrate-all')->first();
+        if ($permission == null) {
             $this->error('Permission administrate-all not found');
             return 1;
         }
-        $permission = Permission::where('permission', '=', 'administrate-all')->first();
+
         if (app(UserInterface::class)->verifyPermissionOfUser($user, $permission)) {
             $this->error('User already has permission administrate-all');
             return 1;

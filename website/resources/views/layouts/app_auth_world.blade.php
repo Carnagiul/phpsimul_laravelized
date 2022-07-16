@@ -26,6 +26,11 @@
                     <li class="nav-item">
                       <a class="nav-link  @if (Route::is('auth.home')) active @endif" @if (Route::is('auth.home')) aria-current="page" @endif href="{{route('auth.home')}}">PHPSIMUL</a>
                     </li>
+                    @if (Auth::user()->isAdmin())
+                    <li class="nav-item">
+                        <a class="nav-link  @if (Route::is('auth.world.admin.home', $world->id)) active @endif" @if (Route::is('auth.world.admin.home', $world->id)) aria-current="page" @endif href="{{route('auth.world.admin.home', $world->id)}}">Administration</a>
+                      </li>
+                    @endif
                 </ul>
               </div>
             </div>

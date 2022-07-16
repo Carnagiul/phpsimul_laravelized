@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GuestController;
+use App\Http\Controllers\WorldAdminController;
 use App\Http\Controllers\WorldController;
 use App\Models\World;
 use Illuminate\Http\Request;
@@ -37,6 +38,13 @@ Route::group([
     ], function () {
         Route::get('/', [WorldController::class, 'home'])->name('home');
         Route::get('/register', [WorldController::class, 'register'])->name('register');
+        Route::group([
+            'as' => 'admin.',
+            'prefix' => 'admin',
+            'middleware' => ['admin'],
+        ], function () {
+            Route::get("/", [WorldAdminController::class, 'home'])->name('home');
+        });
     });
 });
 

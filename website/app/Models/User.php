@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\UserInterface;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,6 +14,8 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     public static $morph = 'user';
+    public bool $isAdmin = false;
+    public bool $adminChecked = false;
 
     /**
      * The attributes that are mass assignable.
@@ -52,5 +55,14 @@ class User extends Authenticatable
     public function permissions()
     {
         return $this->belongsToMany(UserPermission::class);
+    }
+
+    public function isAdmin() {
+        if ($this->adminChecked === false) {
+            $permission = Permission::where('permission', '=', 'administrate-all')->first();
+            $this->isAdmin = app(UserInterface::class)->verifyPermissionOfUser($this, $permission);
+            $this->adminChecked = true;
+        }
+        return $this->isAdmin;
     }
 }
