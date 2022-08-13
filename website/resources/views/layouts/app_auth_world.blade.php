@@ -38,7 +38,7 @@
                                 <li><a class="dropdown-item" href="{{route('auth.world.admin.buildings.list', $world->id)}}">Buildings</a></li>
                               <li><a class="dropdown-item" href="#">Units</a></li>
                               <li><a class="dropdown-item" href="#">Research</a></li>
-                              <li><a class="dropdown-item" href="#">Ressources</a></li>
+                              <li><a class="dropdown-item" href="{{route('auth.world.admin.ressources.list', $world->id)}}">Ressources</a></li>
                               <li><hr class="dropdown-divider"></li>
                               <li><a class="dropdown-item" href="#">Users</a></li>
                               <li><a class="dropdown-item" href="#">Alliances</a></li>

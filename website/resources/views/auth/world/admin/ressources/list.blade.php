@@ -13,12 +13,12 @@
     </div>
 </div>
 
-<a href="{{route('auth.world.admin.buildings.create', $world->id)}}" class="btn btn-primary btn-block">Create a new building</a>
-@foreach ($world->buildings as $building)
+<a href="{{route('auth.world.admin.ressources.create', $world->id)}}" class="btn btn-primary btn-block">Create a new ressource</a>
+@foreach ($world->ressources as $ressource)
 <div class="card text-dark bg-light mb-12">
-    <div class="card-header"><a href="{{route('auth.world.admin.buildings.actions.view', ['world' => $world->id, 'building' => $building->id])}}">Building {{$building->name}} #{{$building->id}}</a></div>
+    <div class="card-header"><a href="{{route('auth.world.admin.ressources.actions.view', ['world' => $world->id, 'ressource' => $ressource->id])}}">Ressource {{$ressource->name}} #{{$ressource->id}}</a></div>
     <div class="card-body">
-      <p class="card-text">{{$building->description}}</p>
+      <p class="card-text">{{$ressource->description}}</p>
     </div>
 </div>
 @endforeach

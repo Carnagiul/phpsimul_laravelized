@@ -72,6 +72,25 @@ Route::group([
                     // Route::post("/updateRequirement", [WorldAdminController::class, 'updateBuildingTimerConfirmation'])->name('updateRequirement.post');
                 });
             });
+            Route::group([
+                'as' => 'ressources.',
+                'prefix' => 'ressources',
+            ], function() {
+
+                Route::get("/", [WorldAdminController::class, 'ressources'])->name('list');
+                Route::get("/create", [WorldAdminController::class, 'createNewRessource'])->middleware('dev')->name('create');
+                Route::post("/create", [WorldAdminController::class, 'createNewRessourceConfirmation'])->middleware('dev')->name('create.post');
+                Route::group([
+                    'as' => 'actions.',
+                    'prefix' => 'ressource_{ressource}',
+                ], function() {
+                    Route::get("/", [WorldAdminController::class, 'viewRessource'])->name('view');
+                    Route::get("/edit", [WorldAdminController::class, 'editRessource'])->name('edit');
+                    Route::post("/edit", [WorldAdminController::class, 'editRessourceConfirmation'])->name('edit.post');
+                    Route::get("/delete", [WorldAdminController::class, 'deleteRessource'])->name('delete');
+                    Route::post("/delete", [WorldAdminController::class, 'deleteRessourceConfirmation'])->name('delete.post');
+                });
+            });
         });
     });
 });

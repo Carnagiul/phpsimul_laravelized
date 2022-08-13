@@ -7,8 +7,11 @@
 @endif
 
 @section('page')
-
+@if (isset($building))
+    <form action="{{route(Route::currentRouteName() . '.post', ['world' => $world->id, 'building' => $building->id])}}" method="POST">
+@else
 <form action="{{route(Route::currentRouteName() . '.post', $world->id)}}" method="POST">
+@endif
 @csrf
 
 <div class="form-group">

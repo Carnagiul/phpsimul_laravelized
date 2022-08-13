@@ -23,6 +23,21 @@ class WorldBuildingInterface extends Controller
         return $building;
     }
 
+    public function updateOldBuilding(WorldBuilding $building, array $datas)
+    {
+        if ($datas['name'] != null && $datas['name'] != $building->name)
+            $building->name = $datas['name'];
+        if ($datas['description'] != null && $datas['description'] != $building->description)
+            $building->description = $datas['description'];
+        if ($datas['max_level'] != null && $datas['max_level'] != $building->max_level)
+            $building->max_level = $datas['max_level'];
+        if ($datas['default_level'] != null && $datas['default_level'] != $building->default_level)
+            $building->default_level = $datas['default_level'];
+        $building->save();
+
+        return $building;
+    }
+
     public function buildingExistInWorld(World $world, String $name)
     {
         return WorldBuilding::where('world_id', $world->id)->where('name', $name)->exists();

@@ -14,7 +14,7 @@ class World extends Model
     public static $morph = 'world';
 
     protected $casts = [
-        'created_at' => 'datetime',
+        'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
         'register_at' => 'datetime',
@@ -29,5 +29,9 @@ class World extends Model
     public function buildings()
     {
         return $this->hasMany(WorldBuilding::class);
+    }
+
+    public function ressources() {
+        return $this->hasMany(WorldRessource::class);
     }
 }
