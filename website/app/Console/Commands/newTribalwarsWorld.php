@@ -7,7 +7,9 @@ use App\Models\Permission;
 use App\Models\User;
 use App\Models\World;
 use App\Models\WorldBuilding;
+use App\Models\WorldRessource;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Collection;
 use Ramsey\Uuid\Type\Integer;
 
 class newTribalwarsWorld extends Command
@@ -37,38 +39,51 @@ class newTribalwarsWorld extends Command
     }
 
     private function createRessources(World $world) {
-        $world->ressources()->create([
+        $wood = new WorldRessource([
             'name' => 'wood',
             'world_id' => $world->id,
             'description' => 'wood is a ressource',
         ]);
+        $wood->save();
 
-        $world->ressources()->create([
-            'name' => 'stone',
+        $clay = new WorldRessource([
+            'name' => 'clay',
             'world_id' => $world->id,
-            'description' => 'stone is a ressource',
+            'description' => 'clay is a ressource',
         ]);
+        $clay->save();
 
-        $world->ressources()->create([
+        $iron = new WorldRessource([
             'name' => 'iron',
             'world_id' => $world->id,
             'description' => 'iron is a ressource',
         ]);
+        $iron->save();
 
-        $world->ressources()->create([
+        $gold = new WorldRessource([
             'name' => 'gold',
             'world_id' => $world->id,
             'description' => 'gold is a ressource',
         ]);
+        $gold->save();
 
-        $world->ressources()->create([
+        $farm = new WorldRessource([
             'name' => 'food',
             'world_id' => $world->id,
             'description' => 'food is a ressource',
         ]);
+        $farm->save();
+
+        return [
+            'wood' => $wood,
+            'clay' => $clay,
+            'iron' => $iron,
+            'gold' => $gold,
+            'food' => $farm,
+        ];
     }
 
-    public function createBuildings(World $world) {
+    public function createBuildings(World $world, WorldRessource $wood, WorldRessource $clay, WorldRessource $iron, WorldRessource $gold, WorldRessource $food) {
         $qg = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Quartier général',
@@ -179,7 +194,7 @@ class newTribalwarsWorld extends Command
         $timber->save();
         $this->createBuildingTimer($timber, 15, 1.2);
 
-        $clay = new WorldBuilding([
+        $clayPit = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Carrière d\'argile',
             'description' => 'Dans cette carrière, vos ouvriers extraient l\'argile. A nouveau, améliorer les niveaux de la Carrière d\'Argile permet d\'augmenter la production.',
@@ -187,10 +202,10 @@ class newTribalwarsWorld extends Command
             'min_level' => 0,
             'default_level' => 0,
         ]);
-        $clay->save();
-        $this->createBuildingTimer($clay, 15, 1.2);
+        $clayPit->save();
+        $this->createBuildingTimer($clayPit, 15, 1.2);
 
-        $iron = new WorldBuilding([
+        $ironMine = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Mine de fer',
             'description' => 'Les mineurs extraient le métal précieux à la guerre dans la Mine de Fer. De même que pour le camp de bois et la carrière d\'argile, les niveaux élevés permettent de produire le plus de matériel.',
@@ -198,8 +213,8 @@ class newTribalwarsWorld extends Command
             'min_level' => 0,
             'default_level' => 0,
         ]);
-        $iron->save();
-        $this->createBuildingTimer($iron, 18, 1.2);
+        $ironMine->save();
+        $this->createBuildingTimer($ironMine, 18, 1.2);
 
         $farm = new WorldBuilding([
             'world_id' => $world->id,
@@ -284,12 +299,12 @@ class newTribalwarsWorld extends Command
         $newWorld->save();
 
         $this->info('Creating new world ressources');
-        $this->createRessources($newWorld);
+        $ressources = $this->createRessources($newWorld);
 
 
 
         $this->info('Creating new world buildings');
-        $this->createBuildings($newWorld);
+        $this->createBuildings($newWorld, $ressources['wood'], $ressources['clay'], $ressources['iron'], $ressources['gold'], $ressources['food']);
 
 
 
