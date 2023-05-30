@@ -17,6 +17,32 @@ use Ramsey\Uuid\Type\Integer;
 
 class newTribalwarsWorld extends Command
 {
+    private $ressourceWood;
+    private $ressourceClay;
+    private $ressourceIron;
+    private $ressourceGold;
+    private $ressourceFarm;
+
+    private $buildingHeadquarter;
+    private $buildingBarack;
+    private $buildingStable;
+    private $buildingWorkshop;
+
+    private $buildingFarm;
+    private $buildingWarehouse;
+    private $buildingWood;
+    private $buildingClay;
+    private $buildingIron;
+    private $buildingAcademy;
+    private $buildingSmithy;
+    private $buildingMarket;
+    private $buildingWall;
+    private $buildingHide;
+    private $buildingPlace;
+    private $buildingStatue;
+
+
+
     /**
      * The name and signature of the console command.
      *
@@ -42,52 +68,45 @@ class newTribalwarsWorld extends Command
     }
 
     private function createRessources(World $world) {
-        $wood = new WorldRessource([
+        $this->ressourceWood = new WorldRessource([
             'name' => 'wood',
             'world_id' => $world->id,
             'description' => 'wood is a ressource',
         ]);
-        $wood->save();
+        $this->ressourceWood->save();
 
-        $clay = new WorldRessource([
+        $this->ressourceClay = new WorldRessource([
             'name' => 'clay',
             'world_id' => $world->id,
             'description' => 'clay is a ressource',
         ]);
-        $clay->save();
+        $this->ressourceClay->save();
 
-        $iron = new WorldRessource([
+        $this->ressourceIron = new WorldRessource([
             'name' => 'iron',
             'world_id' => $world->id,
             'description' => 'iron is a ressource',
         ]);
-        $iron->save();
+        $this->ressourceIron->save();
 
-        $gold = new WorldRessource([
+        $this->ressourceGold = new WorldRessource([
             'name' => 'gold',
             'world_id' => $world->id,
             'description' => 'gold is a ressource',
         ]);
-        $gold->save();
+        $this->ressourceGold->save();
 
-        $farm = new WorldRessource([
+        $this->ressourceFarm = new WorldRessource([
             'name' => 'food',
             'world_id' => $world->id,
             'description' => 'food is a ressource',
         ]);
-        $farm->save();
+        $this->ressourceFarm->save();
 
-        return [
-            'wood' => $wood,
-            'clay' => $clay,
-            'iron' => $iron,
-            'gold' => $gold,
-            'food' => $farm,
-        ];
     }
 
-    public function createBuildings(World $world, WorldRessource $wood, WorldRessource $clay, WorldRessource $iron, WorldRessource $gold, WorldRessource $food) {
-        $qg = new WorldBuilding([
+    public function createBuildings(World $world) {
+        $this->buildingHeadquarter = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Quartier général',
             'description' => 'A partir du Quartier général du village, vous pouvez gérer la construction de nouveaux bâtiments, améliorer leurs niveaux et les démolir à partir du niveau 15 du quartier général. En augmentant le niveau du quartier général, vous accélèrerez les travaux.',
@@ -95,14 +114,14 @@ class newTribalwarsWorld extends Command
             'min_level' => 1,
             'default_level' => 1,
         ]);
-        $qg->save();
-        $this->createBuildingTimer($qg, 10, 1.2,
-            $wood, 90, 1.26,
-            $clay, 80, 1.275,
-            $iron, 70, 1.26
+        $this->buildingHeadquarter->save();
+        $this->createBuildingTimer($this->buildingHeadquarter, 10, 1.2,
+            90, 1.26,
+            80, 1.275,
+            70, 1.26
         );
 
-        $caserne = new WorldBuilding([
+        $this->buildingBarack = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Caserne',
             'description' => 'La Caserne est le bâtiment où est recrutée l\'infanterie (Lanciers, Porteurs d\'épée, Guerriers à la hache et Archers). Plus son niveau est élevé, plus les recrutements sont rapides.',
@@ -110,14 +129,14 @@ class newTribalwarsWorld extends Command
             'min_level' => 0,
             'default_level' => 0,
         ]);
-        $caserne->save();
-        $this->createBuildingTimer($caserne, 30, 1.2,
-            $wood, 200, 1.26,
-            $clay, 170, 1.28,
-            $iron, 90, 1.26
+        $this->buildingBarack->save();
+        $this->createBuildingTimer($this->buildingBarack, 30, 1.2,
+            200, 1.26,
+            170, 1.28,
+            90, 1.26
         );
 
-        $stable = new WorldBuilding([
+        $this->buildingStable = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Ecurie',
             'description' => 'L\'Ecurie permet le recrutement de la cavalerie (Éclaireurs, Cavaleries légères, Archers montés, Cavaleries lourdes). Comme pour la caserne, plus son niveau est élevé, plus les recrutements sont rapides.',
@@ -125,14 +144,14 @@ class newTribalwarsWorld extends Command
             'min_level' => 0,
             'default_level' => 0,
         ]);
-        $stable->save();
-        $this->createBuildingTimer($stable, 100, 1.2,
-            $wood, 270, 1.26,
-            $clay, 240, 1.28,
-            $iron, 260, 1.26
+        $this->buildingStable->save();
+        $this->createBuildingTimer($this->buildingStable, 100, 1.2,
+            270, 1.26,
+            240, 1.28,
+            260, 1.26
         );
 
-        $workshop = new WorldBuilding([
+        $this->buildingWorkshop = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Atelier',
             'description' => 'Dans l\'Atelier, vous pouvez produire des Béliers et Catapultes. Comme pour la caserne et l\'écurie, la vitesse de production est accélérée lorsque les niveaux augmentent.',
@@ -140,14 +159,14 @@ class newTribalwarsWorld extends Command
             'min_level' => 0,
             'default_level' => 0,
         ]);
-        $workshop->save();
-        $this->createBuildingTimer($workshop, 100, 1.2,
-            $wood, 300, 1.26,
-            $clay, 240, 1.28,
-            $iron, 260, 1.26
+        $this->buildingWorkshop->save();
+        $this->createBuildingTimer($this->buildingWorkshop, 100, 1.2,
+            300, 1.26,
+            240, 1.28,
+            260, 1.26
         );
 
-        $academie = new WorldBuilding([
+        $this->buildingAcademy = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Académie',
             'description' => 'L\'éducation des nobles se passe dans l\'Académie. Ils sont la pierre angulaire de la victoire!',
@@ -155,14 +174,14 @@ class newTribalwarsWorld extends Command
             'min_level' => 0,
             'default_level' => 0,
         ]);
-        $academie->save();
-        $this->createBuildingTimer($academie, 1080, 1.2,
-            $wood, 15000, 2,
-            $clay, 25000, 2,
-            $iron, 10000, 2);
+        $this->buildingAcademy->save();
+        $this->createBuildingTimer($this->buildingAcademy, 1080, 1.2,
+            15000, 2,
+            25000, 2,
+            10000, 2);
 
 
-        $forge = new WorldBuilding([
+        $this->buildingSmithy = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Forge',
             'description' => 'La Forge est le bâtiment où les forgerons, en échange d\'un certain prix, effectuent les recherches et améliorations des armes. Plus son niveau sera élevé, plus les forgerons travailleront vite et meilleures seront les armes à rechercher.',
@@ -170,14 +189,14 @@ class newTribalwarsWorld extends Command
             'min_level' => 0,
             'default_level' => 0,
         ]);
-        $forge->save();
-        $this->createBuildingTimer($forge, 100, 1.2,
-            $wood, 220, 1.26,
-            $clay, 180, 1.275,
-            $iron, 240, 1.26
+        $this->buildingSmithy->save();
+        $this->createBuildingTimer($this->buildingSmithy, 100, 1.2,
+            220, 1.26,
+            180, 1.275,
+            240, 1.26
         );
 
-        $rally = new WorldBuilding([
+        $this->buildingPlace = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Place de rassemblement',
             'description' => 'Vos combattants se rencontrent au Point de ralliement. De là, vous pouvez commander votre armée.',
@@ -185,14 +204,14 @@ class newTribalwarsWorld extends Command
             'min_level' => 0,
             'default_level' => 1,
         ]);
-        $rally->save();
-        $this->createBuildingTimer($rally, 20, 1.2,
-            $wood, 10, 1.26,
-            $clay, 40, 1.275,
-            $iron, 30, 1.26
+        $this->buildingPlace->save();
+        $this->createBuildingTimer($this->buildingPlace, 20, 1.2,
+            10, 1.26,
+            40, 1.275,
+            30, 1.26
         );
 
-        $statue = new WorldBuilding([
+        $this->buildingStatue = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Statue',
             'description' => 'La Statue est l\'endroit où vos villageois rendent hommage à votre paladin et où vous pouvez l\'équiper et l\'améliorer. S\'il meurt, vous pouvez en nommer un autre parmi vos combattants.',
@@ -200,14 +219,14 @@ class newTribalwarsWorld extends Command
             'min_level' => 0,
             'default_level' => 0,
         ]);
-        $statue->save();
-        $this->createBuildingTimer($statue, 25, 1.2,
-            $wood, 220, 1.26,
-            $clay, 220, 1.275,
-            $iron, 220, 1.26
+        $this->buildingStatue->save();
+        $this->createBuildingTimer($this->buildingStatue, 25, 1.2,
+            220, 1.26,
+            220, 1.275,
+            220, 1.26
         );
 
-        $market = new WorldBuilding([
+        $this->buildingMarket = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Marché',
             'description' => 'Au Marché, il est possible de charger les marchands et effectuer ainsi des échanges de ressources avec les autres joueurs.',
@@ -215,14 +234,14 @@ class newTribalwarsWorld extends Command
             'min_level' => 0,
             'default_level' => 0,
         ]);
-        $market->save();
-        $this->createBuildingTimer($market, 45, 1.2,
-            $wood, 100, 1.25,
-            $clay, 100, 1.275,
-            $iron, 100, 1.26
+        $this->buildingMarket->save();
+        $this->createBuildingTimer($this->buildingMarket, 45, 1.2,
+            100, 1.25,
+            100, 1.275,
+            100, 1.26
         );
 
-        $timber = new WorldBuilding([
+        $this->buildingWood = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Camp de bûcherons',
             'description' => 'Dans les forêts sombres, vos bûcherons coupent des arbres massifs pour produire du bois, qui est l\'un des trois types de ressources, nécessaires aux constructions et recrutements. Améliorer les niveaux du Camp de Bois permet d\'augmenter sa production.',
@@ -230,14 +249,14 @@ class newTribalwarsWorld extends Command
             'min_level' => 0,
             'default_level' => 0,
         ]);
-        $timber->save();
-        $this->createBuildingTimer($timber, 15, 1.2,
-            $wood, 50, 1.25,
-            $clay, 60, 1.275,
-            $iron, 40, 1.245
+        $this->buildingWood->save();
+        $this->createBuildingTimer($this->buildingWood, 15, 1.2,
+            50, 1.25,
+            60, 1.275,
+            40, 1.245
         );
 
-        $clayPit = new WorldBuilding([
+        $this->buildingClay = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Carrière d\'argile',
             'description' => 'Dans cette carrière, vos ouvriers extraient l\'argile. A nouveau, améliorer les niveaux de la Carrière d\'Argile permet d\'augmenter la production.',
@@ -245,14 +264,14 @@ class newTribalwarsWorld extends Command
             'min_level' => 0,
             'default_level' => 0,
         ]);
-        $clayPit->save();
-        $this->createBuildingTimer($clayPit, 15, 1.2,
-            $wood, 65, 1.27,
-            $clay, 50, 1.265,
-            $iron, 40, 1.24
+        $this->buildingClay->save();
+        $this->createBuildingTimer($this->buildingClay, 15, 1.2,
+            65, 1.27,
+            50, 1.265,
+            40, 1.24
         );
 
-        $ironMine = new WorldBuilding([
+        $this->buildingIron = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Mine de fer',
             'description' => 'Les mineurs extraient le métal précieux à la guerre dans la Mine de Fer. De même que pour le camp de bois et la carrière d\'argile, les niveaux élevés permettent de produire le plus de matériel.',
@@ -260,14 +279,14 @@ class newTribalwarsWorld extends Command
             'min_level' => 0,
             'default_level' => 0,
         ]);
-        $ironMine->save();
-        $this->createBuildingTimer($ironMine, 18, 1.2,
-            $wood, 75, 1.252,
-            $clay, 65, 1.275,
-            $iron, 70, 1.24
+        $this->buildingIron->save();
+        $this->createBuildingTimer($this->buildingIron, 18, 1.2,
+            75, 1.252,
+            65, 1.275,
+            70, 1.24
         );
 
-        $farm = new WorldBuilding([
+        $this->buildingFarm = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Ferme',
             'description' => 'La Ferme loge et nourrit vos troupes, ainsi que vos travailleurs. Sans améliorations, votre village ne pourra pas se développer. La capacité de la ferme augmente avec chaque niveau.',
@@ -275,14 +294,14 @@ class newTribalwarsWorld extends Command
             'min_level' => 1,
             'default_level' => 1,
         ]);
-        $farm->save();
-        $this->createBuildingTimer($farm, 20, 1.2,
-            $wood, 45, 1.3,
-            $clay, 40, 1.32,
-            $iron, 30, 1.29
+        $this->buildingFarm->save();
+        $this->createBuildingTimer($this->buildingFarm, 20, 1.2,
+            45, 1.3,
+            40, 1.32,
+            30, 1.29
         );
 
-        $warhouse = new WorldBuilding([
+        $this->buildingWarehouse = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Entrepôt',
             'description' => 'Les ressources sont stockées dans l\'Entrepôt. Chaque niveau améliore les capacités de stockage de ressources.',
@@ -290,14 +309,14 @@ class newTribalwarsWorld extends Command
             'min_level' => 1,
             'default_level' => 1,
         ]);
-        $warhouse->save();
-        $this->createBuildingTimer($warhouse, 17, 1.2,
-            $wood, 60, 1.265,
-            $clay, 50, 1.27,
-            $iron, 40, 1.245
+        $this->buildingWarehouse->save();
+        $this->createBuildingTimer($this->buildingWarehouse, 17, 1.2,
+            60, 1.265,
+            50, 1.27,
+            40, 1.245
         );
 
-        $hide = new WorldBuilding([
+        $this->buildingHide = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Cachette',
             'description' => 'Ce bâtiment cache vos ressources des assauts de troupes ennemies, y compris les éclaireurs.',
@@ -305,14 +324,14 @@ class newTribalwarsWorld extends Command
             'min_level' => 0,
             'default_level' => 0,
         ]);
-        $hide->save();
-        $this->createBuildingTimer($hide, 30, 1.2,
-            $wood, 50, 1.25,
-            $clay, 60, 1.25,
-            $iron, 50, 1.25
+        $this->buildingHide->save();
+        $this->createBuildingTimer($this->buildingHide, 30, 1.2,
+            50, 1.25,
+            60, 1.25,
+            50, 1.25
         );
 
-        $wall = new WorldBuilding([
+        $this->buildingWall = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Muraille',
             'description' => 'La Muraille protège votre village des troupes ennemies et augmente la puissance défensive de vos troupes. Ses effets seront multipliés avec chaque augmentation de niveau.',
@@ -320,15 +339,15 @@ class newTribalwarsWorld extends Command
             'min_level' => 0,
             'default_level' => 0,
         ]);
-        $wall->save();
-        $this->createBuildingTimer($wall, 60, 1.2,
-            $wood, 50, 1.26,
-            $clay, 100, 1.275,
-            $iron, 20, 1.26
+        $this->buildingWall->save();
+        $this->createBuildingTimer($this->buildingWall, 60, 1.2,
+            50, 1.26,
+            100, 1.275,
+            20, 1.26
         );
     }
 
-    private function createBuildingTimer(WorldBuilding $building, int $initialTime, float $timeMultiplier, WorldRessource $wood, int $woodBase, float $woodEvo, WorldRessource $clay, int $clayBase, float $clayEvo, WorldRessource $iron, int $ironBase, float $ironEvo) {
+    private function createBuildingTimer(WorldBuilding $building, int $initialTime, float $timeMultiplier, int $woodBase, float $woodEvo, int $clayBase, float $clayEvo, int $ironBase, float $ironEvo) {
         $this->info('Preparing Evolution of ' . $building->name . ' With Initial Time AT ' . $initialTime . ' And Evolution ' . $timeMultiplier);
 
         $time = $initialTime;
@@ -343,9 +362,9 @@ class newTribalwarsWorld extends Command
                 'duration' => intval($time),
             ]);
             $level->save();
-            $this->createBuildingRessourceEvo($level, $wood, $woodBase, $woodEvo);
-            $this->createBuildingRessourceEvo($level, $clay, $clayBase, $clayEvo);
-            $this->createBuildingRessourceEvo($level, $iron, $ironBase, $ironEvo);
+            $this->createBuildingRessourceEvo($level, $this->ressourceWood, $woodBase, $woodEvo);
+            $this->createBuildingRessourceEvo($level, $this->ressourceClay, $clayBase, $clayEvo);
+            $this->createBuildingRessourceEvo($level, $this->ressourceIron, $ironBase, $ironEvo);
 
         }
     }
