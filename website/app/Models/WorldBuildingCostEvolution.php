@@ -11,6 +11,12 @@ class WorldBuildingCostEvolution extends Model
 
     public static $morph = 'world_building_cost_evolution';
 
+    protected $fillable = [
+        'world_building_evolution_id',
+        'world_ressource_id',
+        'amount',
+    ];
+
     public function buildingEvolution()
     {
         return $this->belongsTo(WorldBuildingEvolution::class);

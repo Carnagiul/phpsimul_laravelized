@@ -7,7 +7,10 @@ use App\Models\Permission;
 use App\Models\User;
 use App\Models\World;
 use App\Models\WorldBuilding;
+use App\Models\WorldBuildingCostEvolution;
+use App\Models\WorldBuildingEvolution;
 use App\Models\WorldRessource;
+use CreateWorldBuildingCostEvolutionsTable;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
 use Ramsey\Uuid\Type\Integer;
@@ -93,7 +96,11 @@ class newTribalwarsWorld extends Command
             'default_level' => 1,
         ]);
         $qg->save();
-        $this->createBuildingTimer($qg, 10, 1.2);
+        $this->createBuildingTimer($qg, 10, 1.2,
+            $wood, 90, 1.26,
+            $clay, 80, 1.275,
+            $iron, 70, 1.26
+        );
 
         $caserne = new WorldBuilding([
             'world_id' => $world->id,
@@ -104,7 +111,11 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $caserne->save();
-        $this->createBuildingTimer($caserne, 30, 1.2);
+        $this->createBuildingTimer($caserne, 30, 1.2,
+            $wood, 200, 1.26,
+            $clay, 170, 1.28,
+            $iron, 90, 1.26
+        );
 
         $stable = new WorldBuilding([
             'world_id' => $world->id,
@@ -115,7 +126,11 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $stable->save();
-        $this->createBuildingTimer($stable, 100, 1.2);
+        $this->createBuildingTimer($stable, 100, 1.2,
+            $wood, 270, 1.26,
+            $clay, 240, 1.28,
+            $iron, 260, 1.26
+        );
 
         $workshop = new WorldBuilding([
             'world_id' => $world->id,
@@ -126,7 +141,11 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $workshop->save();
-        $this->createBuildingTimer($workshop, 100, 1.2);
+        $this->createBuildingTimer($workshop, 100, 1.2,
+            $wood, 300, 1.26,
+            $clay, 240, 1.28,
+            $iron, 260, 1.26
+        );
 
         $academie = new WorldBuilding([
             'world_id' => $world->id,
@@ -137,7 +156,11 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $academie->save();
-        $this->createBuildingTimer($academie, 1080, 1.2);
+        $this->createBuildingTimer($academie, 1080, 1.2,
+            $wood, 15000, 2,
+            $clay, 25000, 2,
+            $iron, 10000, 2);
+
 
         $forge = new WorldBuilding([
             'world_id' => $world->id,
@@ -148,7 +171,11 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $forge->save();
-        $this->createBuildingTimer($forge, 100, 1.2);
+        $this->createBuildingTimer($forge, 100, 1.2,
+            $wood, 220, 1.26,
+            $clay, 180, 1.275,
+            $iron, 240, 1.26
+        );
 
         $rally = new WorldBuilding([
             'world_id' => $world->id,
@@ -159,7 +186,11 @@ class newTribalwarsWorld extends Command
             'default_level' => 1,
         ]);
         $rally->save();
-        $this->createBuildingTimer($rally, 20, 1.2);
+        $this->createBuildingTimer($rally, 20, 1.2,
+            $wood, 10, 1.26,
+            $clay, 40, 1.275,
+            $iron, 30, 1.26
+        );
 
         $statue = new WorldBuilding([
             'world_id' => $world->id,
@@ -170,7 +201,11 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $statue->save();
-        $this->createBuildingTimer($statue, 25, 1.2);
+        $this->createBuildingTimer($statue, 25, 1.2,
+            $wood, 220, 1.26,
+            $clay, 220, 1.275,
+            $iron, 220, 1.26
+        );
 
         $market = new WorldBuilding([
             'world_id' => $world->id,
@@ -181,7 +216,11 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $market->save();
-        $this->createBuildingTimer($market, 45, 1.2);
+        $this->createBuildingTimer($market, 45, 1.2,
+            $wood, 100, 1.25,
+            $clay, 100, 1.275,
+            $iron, 100, 1.26
+        );
 
         $timber = new WorldBuilding([
             'world_id' => $world->id,
@@ -192,7 +231,11 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $timber->save();
-        $this->createBuildingTimer($timber, 15, 1.2);
+        $this->createBuildingTimer($timber, 15, 1.2,
+            $wood, 50, 1.25,
+            $clay, 60, 1.275,
+            $iron, 40, 1.245
+        );
 
         $clayPit = new WorldBuilding([
             'world_id' => $world->id,
@@ -203,7 +246,11 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $clayPit->save();
-        $this->createBuildingTimer($clayPit, 15, 1.2);
+        $this->createBuildingTimer($clayPit, 15, 1.2,
+            $wood, 65, 1.27,
+            $clay, 50, 1.265,
+            $iron, 40, 1.24
+        );
 
         $ironMine = new WorldBuilding([
             'world_id' => $world->id,
@@ -214,7 +261,11 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $ironMine->save();
-        $this->createBuildingTimer($ironMine, 18, 1.2);
+        $this->createBuildingTimer($ironMine, 18, 1.2,
+            $wood, 75, 1.252,
+            $clay, 65, 1.275,
+            $iron, 70, 1.24
+        );
 
         $farm = new WorldBuilding([
             'world_id' => $world->id,
@@ -225,7 +276,11 @@ class newTribalwarsWorld extends Command
             'default_level' => 1,
         ]);
         $farm->save();
-        $this->createBuildingTimer($farm, 20, 1.2);
+        $this->createBuildingTimer($farm, 20, 1.2,
+            $wood, 45, 1.3,
+            $clay, 40, 1.32,
+            $iron, 30, 1.29
+        );
 
         $warhouse = new WorldBuilding([
             'world_id' => $world->id,
@@ -236,7 +291,11 @@ class newTribalwarsWorld extends Command
             'default_level' => 1,
         ]);
         $warhouse->save();
-        $this->createBuildingTimer($warhouse, 17, 1.2);
+        $this->createBuildingTimer($warhouse, 17, 1.2,
+            $wood, 60, 1.265,
+            $clay, 50, 1.27,
+            $iron, 40, 1.245
+        );
 
         $hide = new WorldBuilding([
             'world_id' => $world->id,
@@ -247,7 +306,11 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $hide->save();
-        $this->createBuildingTimer($hide, 30, 1.2);
+        $this->createBuildingTimer($hide, 30, 1.2,
+            $wood, 50, 1.25,
+            $clay, 60, 1.25,
+            $iron, 50, 1.25
+        );
 
         $wall = new WorldBuilding([
             'world_id' => $world->id,
@@ -258,10 +321,14 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $wall->save();
-        $this->createBuildingTimer($wall, 60, 1.2);
+        $this->createBuildingTimer($wall, 60, 1.2,
+            $wood, 50, 1.26,
+            $clay, 100, 1.275,
+            $iron, 20, 1.26
+        );
     }
 
-    private function createBuildingTimer(WorldBuilding $building, int $initialTime, float $timeMultiplier) {
+    private function createBuildingTimer(WorldBuilding $building, int $initialTime, float $timeMultiplier, WorldRessource $wood, int $woodBase, float $woodEvo, WorldRessource $clay, int $clayBase, float $clayEvo, WorldRessource $iron, int $ironBase, float $ironEvo) {
         $this->info('Preparing Evolution of ' . $building->name . ' With Initial Time AT ' . $initialTime . ' And Evolution ' . $timeMultiplier);
 
         $time = $initialTime;
@@ -270,12 +337,32 @@ class newTribalwarsWorld extends Command
                 $time *= $timeMultiplier;
             $this->info('Creating evolution for ' . $building->name . ' level ' . $i . ' with time ' . intval($time));
 
-            $building->evolutions()->create([
+            $level = new WorldBuildingEvolution([
                 'world_building_id' => $building->id,
                 'level' => $i,
                 'duration' => intval($time),
             ]);
+            $level->save();
+            $this->createBuildingRessourceEvo($level, $wood, $woodBase, $woodEvo);
+            $this->createBuildingRessourceEvo($level, $clay, $clayBase, $clayEvo);
+            $this->createBuildingRessourceEvo($level, $iron, $ironBase, $ironEvo);
+
         }
+    }
+
+    public function createBuildingRessourceEvo(WorldBuildingEvolution $evolution, WorldRessource $ressources, int $initialNeed, float $multiplicator) {
+        $totalNeed = $initialNeed;
+
+        for ($i = 0; $i <= $evolution->level; $i++) {
+            if ($i > 1)
+                $totalNeed *= $multiplicator;
+        }
+        $cost = new WorldBuildingCostEvolution([
+            'world_building_evolution_id' => $evolution->id,
+            'world_ressource_id' => $ressources->id,
+            'amount' => intval($totalNeed),
+        ]);
+        $cost->save();
     }
 
     /**
