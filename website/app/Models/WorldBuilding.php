@@ -11,6 +11,15 @@ class WorldBuilding extends Model
 
     public static $morph = 'world_building';
 
+    protected $fillable = [
+        'world_id',
+        'name',
+        'description',
+        'max_level',
+        'default_level',
+        'min_level'
+    ];
+
     public function world()
     {
         return $this->belongsTo(World::class);

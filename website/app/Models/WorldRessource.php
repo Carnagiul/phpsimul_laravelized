@@ -13,6 +13,12 @@ class WorldRessource extends Model
 
     public static $morph = 'world_ressource';
 
+    protected $fillable = [
+        'world_id',
+        'name',
+        'description',
+    ];
+
     public function world() {
         return $this->belongsTo(World::class);
     }
