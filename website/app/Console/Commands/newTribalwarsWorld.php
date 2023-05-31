@@ -118,7 +118,8 @@ class newTribalwarsWorld extends Command
         $this->createBuildingTimer($this->buildingHeadquarter, 10, 1.2,
             90, 1.26,
             80, 1.275,
-            70, 1.26
+            70, 1.26,
+            5, 1.17
         );
 
         $this->buildingBarack = new WorldBuilding([
@@ -133,7 +134,8 @@ class newTribalwarsWorld extends Command
         $this->createBuildingTimer($this->buildingBarack, 30, 1.2,
             200, 1.26,
             170, 1.28,
-            90, 1.26
+            90, 1.26,
+            7, 1,17
         );
 
         $this->buildingStable = new WorldBuilding([
@@ -148,7 +150,8 @@ class newTribalwarsWorld extends Command
         $this->createBuildingTimer($this->buildingStable, 100, 1.2,
             270, 1.26,
             240, 1.28,
-            260, 1.26
+            260, 1.26,
+            8, 1.17
         );
 
         $this->buildingWorkshop = new WorldBuilding([
@@ -163,7 +166,8 @@ class newTribalwarsWorld extends Command
         $this->createBuildingTimer($this->buildingWorkshop, 100, 1.2,
             300, 1.26,
             240, 1.28,
-            260, 1.26
+            260, 1.26,
+            8, 1.17
         );
 
         $this->buildingAcademy = new WorldBuilding([
@@ -178,7 +182,9 @@ class newTribalwarsWorld extends Command
         $this->createBuildingTimer($this->buildingAcademy, 1080, 1.2,
             15000, 2,
             25000, 2,
-            10000, 2);
+            10000, 2,
+            80, 1.17
+        );
 
 
         $this->buildingSmithy = new WorldBuilding([
@@ -193,7 +199,8 @@ class newTribalwarsWorld extends Command
         $this->createBuildingTimer($this->buildingSmithy, 100, 1.2,
             220, 1.26,
             180, 1.275,
-            240, 1.26
+            240, 1.26,
+            20, 1.17
         );
 
         $this->buildingPlace = new WorldBuilding([
@@ -208,7 +215,8 @@ class newTribalwarsWorld extends Command
         $this->createBuildingTimer($this->buildingPlace, 20, 1.2,
             10, 1.26,
             40, 1.275,
-            30, 1.26
+            30, 1.26,
+            0, 1.17
         );
 
         $this->buildingStatue = new WorldBuilding([
@@ -223,7 +231,8 @@ class newTribalwarsWorld extends Command
         $this->createBuildingTimer($this->buildingStatue, 25, 1.2,
             220, 1.26,
             220, 1.275,
-            220, 1.26
+            220, 1.26,
+            10, 1.17
         );
 
         $this->buildingMarket = new WorldBuilding([
@@ -238,7 +247,8 @@ class newTribalwarsWorld extends Command
         $this->createBuildingTimer($this->buildingMarket, 45, 1.2,
             100, 1.25,
             100, 1.275,
-            100, 1.26
+            100, 1.26,
+            20, 1.17
         );
 
         $this->buildingWood = new WorldBuilding([
@@ -253,7 +263,8 @@ class newTribalwarsWorld extends Command
         $this->createBuildingTimer($this->buildingWood, 15, 1.2,
             50, 1.25,
             60, 1.275,
-            40, 1.245
+            40, 1.245,
+            5, 1.155
         );
 
         $this->buildingClay = new WorldBuilding([
@@ -268,7 +279,8 @@ class newTribalwarsWorld extends Command
         $this->createBuildingTimer($this->buildingClay, 15, 1.2,
             65, 1.27,
             50, 1.265,
-            40, 1.24
+            40, 1.24,
+            10, 1.14
         );
 
         $this->buildingIron = new WorldBuilding([
@@ -283,7 +295,8 @@ class newTribalwarsWorld extends Command
         $this->createBuildingTimer($this->buildingIron, 18, 1.2,
             75, 1.252,
             65, 1.275,
-            70, 1.24
+            70, 1.24,
+            10, 1.17
         );
 
         $this->buildingFarm = new WorldBuilding([
@@ -298,7 +311,8 @@ class newTribalwarsWorld extends Command
         $this->createBuildingTimer($this->buildingFarm, 20, 1.2,
             45, 1.3,
             40, 1.32,
-            30, 1.29
+            30, 1.29,
+            0, 1
         );
 
         $this->buildingWarehouse = new WorldBuilding([
@@ -313,7 +327,8 @@ class newTribalwarsWorld extends Command
         $this->createBuildingTimer($this->buildingWarehouse, 17, 1.2,
             60, 1.265,
             50, 1.27,
-            40, 1.245
+            40, 1.245,
+            0, 1.15
         );
 
         $this->buildingHide = new WorldBuilding([
@@ -328,7 +343,8 @@ class newTribalwarsWorld extends Command
         $this->createBuildingTimer($this->buildingHide, 30, 1.2,
             50, 1.25,
             60, 1.25,
-            50, 1.25
+            50, 1.25,
+            2, 1.17
         );
 
         $this->buildingWall = new WorldBuilding([
@@ -343,13 +359,13 @@ class newTribalwarsWorld extends Command
         $this->createBuildingTimer($this->buildingWall, 60, 1.2,
             50, 1.26,
             100, 1.275,
-            20, 1.26
+            20, 1.26,
+            5, 1.17
         );
     }
 
-    private function createBuildingTimer(WorldBuilding $building, int $initialTime, float $timeMultiplier, int $woodBase, float $woodEvo, int $clayBase, float $clayEvo, int $ironBase, float $ironEvo) {
+    private function createBuildingTimer(WorldBuilding $building, int $initialTime, float $timeMultiplier, int $woodBase, float $woodEvo, int $clayBase, float $clayEvo, int $ironBase, float $ironEvo, int $farmBase, float $farmEvo) {
         $this->info('Preparing Evolution of ' . $building->name . ' With Initial Time AT ' . $initialTime . ' And Evolution ' . $timeMultiplier);
-
         $time = $initialTime;
         for ($i = $building->min_level; $i <= $building->max_level; $i++) {
             if ($i >= 1)
@@ -365,23 +381,35 @@ class newTribalwarsWorld extends Command
             $this->createBuildingRessourceEvo($level, $this->ressourceWood, $woodBase, $woodEvo);
             $this->createBuildingRessourceEvo($level, $this->ressourceClay, $clayBase, $clayEvo);
             $this->createBuildingRessourceEvo($level, $this->ressourceIron, $ironBase, $ironEvo);
+            $this->createBuildingRessourceEvo($level, $this->ressourceFarm, $farmBase, $farmEvo, true);
 
         }
     }
 
-    public function createBuildingRessourceEvo(WorldBuildingEvolution $evolution, WorldRessource $ressources, int $initialNeed, float $multiplicator) {
-        $totalNeed = $initialNeed;
-
+    public function createBuildingRessourceEvo(WorldBuildingEvolution $evolution, WorldRessource $ressources, int $initialNeed, float $multiplicator, bool $isFarm = false): WorldBuildingCostEvolution {
+        $totalNeed = $farmNeed = $initialNeed;
         for ($i = 0; $i <= $evolution->level; $i++) {
             if ($i > 1)
+            {
+                $farmNeed = $totalNeed;
                 $totalNeed *= $multiplicator;
+            }
         }
+
+
+        $this->info("Creating cost for " . $ressources->name . " with amount " . intval($totalNeed) . " for level " . $evolution->level);
+        if ($isFarm)
+            $totalNeed -= $farmNeed;
+        $this->info("Creating cost for " . $ressources->name . " with amount " . intval($totalNeed) . " for level " . $evolution->level);
+
+
         $cost = new WorldBuildingCostEvolution([
             'world_building_evolution_id' => $evolution->id,
             'world_ressource_id' => $ressources->id,
             'amount' => intval($totalNeed),
         ]);
         $cost->save();
+        return $cost;
     }
 
     /**
@@ -405,12 +433,12 @@ class newTribalwarsWorld extends Command
         $newWorld->save();
 
         $this->info('Creating new world ressources');
-        $ressources = $this->createRessources($newWorld);
+        $this->createRessources($newWorld);
 
 
 
         $this->info('Creating new world buildings');
-        $this->createBuildings($newWorld, $ressources['wood'], $ressources['clay'], $ressources['iron'], $ressources['gold'], $ressources['food']);
+        $this->createBuildings($newWorld);
 
 
 
