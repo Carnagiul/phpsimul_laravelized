@@ -9,6 +9,8 @@ use App\Models\World;
 use App\Models\WorldBuilding;
 use App\Models\WorldBuildingCostEvolution;
 use App\Models\WorldBuildingEvolution;
+use App\Models\WorldBuildingProductionEvolution;
+use App\Models\WorldBuildingStorageEvolution;
 use App\Models\WorldRessource;
 use CreateWorldBuildingCostEvolutionsTable;
 use Illuminate\Console\Command;
@@ -115,11 +117,28 @@ class newTribalwarsWorld extends Command
             'default_level' => 1,
         ]);
         $this->buildingHeadquarter->save();
-        $this->createBuildingTimer($this->buildingHeadquarter, 10, 1.2,
-            90, 1.26,
-            80, 1.275,
-            70, 1.26,
-            5, 1.17
+        $this->createBuildingTimer($this->buildingHeadquarter,
+            ['initial' => 10, 'evolution' => 1.2],
+            ['initial' => 90, 'evolution' => 1.26],
+            ['initial' => 80, 'evolution' => 1.275],
+            ['initial' => 70, 'evolution' => 1.26],
+            ['initial' => 5, 'evolution' => 1.17],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ]
         );
 
         $this->buildingBarack = new WorldBuilding([
@@ -131,43 +150,94 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $this->buildingBarack->save();
-        $this->createBuildingTimer($this->buildingBarack, 30, 1.2,
-            200, 1.26,
-            170, 1.28,
-            90, 1.26,
-            7, 1,17
+        $this->createBuildingTimer($this->buildingBarack,
+            ['initial' => 30, 'evolution' => 1.2],
+            ['initial' => 200, 'evolution' => 1.26],
+            ['initial' => 170, 'evolution' => 1.28],
+            ['initial' => 90, 'evolution' => 1.26],
+            ['initial' => 7, 'evolution' => 1.17],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ]
         );
 
         $this->buildingStable = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Ecurie',
-            'description' => 'L\'Ecurie permet le recrutement de la cavalerie (Éclaireurs, Cavaleries légères, Archers montés, Cavaleries lourdes). Comme pour la caserne, plus son niveau est élevé, plus les recrutements sont rapides.',
+            'description' => 'L\'Ecurie permet le recrutement de la cavalerie ([Éclaireurs, Cavaleries légères, Archers montés, Cavaleries lourdes]). Comme pour la caserne, plus son] niveau est élevé, plus les] recrutements sont rapides.',
             'max_level' => 20,
             'min_level' => 0,
             'default_level' => 0,
         ]);
         $this->buildingStable->save();
-        $this->createBuildingTimer($this->buildingStable, 100, 1.2,
-            270, 1.26,
-            240, 1.28,
-            260, 1.26,
-            8, 1.17
+        $this->createBuildingTimer($this->buildingStable,
+            ['initial' => 100, 'evolution' => 1.2],
+            ['initial' => 270, 'evolution' => 1.26],
+            ['initial' => 240, 'evolution' => 1.28],
+            ['initial' => 260, 'evolution' => 1.26],
+            ['initial' => 8, 'evolution' => 1.17],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ]
         );
 
         $this->buildingWorkshop = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Atelier',
-            'description' => 'Dans l\'Atelier, vous pouvez produire des Béliers et Catapultes. Comme pour la caserne et l\'écurie, la vitesse de production est accélérée lorsque les niveaux augmentent.',
+            'description' => 'Dans l\'Atelier, vous pouvez] produire des Béliers et Catapultes. Comme pour la caserne et l\'écurie, la vitesse] de production est accélérée lorsque les niveaux augmentent.',
             'max_level' => 15,
             'min_level' => 0,
             'default_level' => 0,
         ]);
         $this->buildingWorkshop->save();
-        $this->createBuildingTimer($this->buildingWorkshop, 100, 1.2,
-            300, 1.26,
-            240, 1.28,
-            260, 1.26,
-            8, 1.17
+        $this->createBuildingTimer($this->buildingWorkshop,
+            ['initial' => 100, 'evolution' => 1.2],
+            ['initial' => 300, 'evolution' => 1.26],
+            ['initial' => 240, 'evolution' => 1.28],
+            ['initial' => 260, 'evolution' => 1.26],
+            ['initial' => 8, 'evolution' => 1.17],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ]
         );
 
         $this->buildingAcademy = new WorldBuilding([
@@ -179,11 +249,28 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $this->buildingAcademy->save();
-        $this->createBuildingTimer($this->buildingAcademy, 1080, 1.2,
-            15000, 2,
-            25000, 2,
-            10000, 2,
-            80, 1.17
+        $this->createBuildingTimer($this->buildingAcademy,
+            ['initial' => 1080, 'evolution' => 1.2],
+            ['initial' => 15000, 'evolution' => 2],
+            ['initial' => 25000, 'evolution' => 2],
+            ['initial' => 10000, 'evolution' => 2],
+            ['initial' => 80, 'evolution' => 1.17],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ]
         );
 
 
@@ -196,11 +283,28 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $this->buildingSmithy->save();
-        $this->createBuildingTimer($this->buildingSmithy, 100, 1.2,
-            220, 1.26,
-            180, 1.275,
-            240, 1.26,
-            20, 1.17
+        $this->createBuildingTimer($this->buildingSmithy,
+            ['initial' => 100, 'evolution' => 1.2],
+            ['initial' => 220, 'evolution' => 1.26],
+            ['initial' => 180, 'evolution' => 1.275],
+            ['initial' => 240, 'evolution' => 1.26],
+            ['initial' => 20, 'evolution' => 1.17],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ]
         );
 
         $this->buildingPlace = new WorldBuilding([
@@ -212,11 +316,28 @@ class newTribalwarsWorld extends Command
             'default_level' => 1,
         ]);
         $this->buildingPlace->save();
-        $this->createBuildingTimer($this->buildingPlace, 20, 1.2,
-            10, 1.26,
-            40, 1.275,
-            30, 1.26,
-            0, 1.17
+        $this->createBuildingTimer($this->buildingPlace,
+            ['initial' => 20, 'evolution' => 1.2],
+            ['initial' => 10, 'evolution' => 1.26],
+            ['initial' => 40, 'evolution' => 1.275],
+            ['initial' => 30, 'evolution' => 1.26],
+            ['initial' => 0, 'evolution' => 1.17],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ]
         );
 
         $this->buildingStatue = new WorldBuilding([
@@ -228,11 +349,28 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $this->buildingStatue->save();
-        $this->createBuildingTimer($this->buildingStatue, 25, 1.2,
-            220, 1.26,
-            220, 1.275,
-            220, 1.26,
-            10, 1.17
+        $this->createBuildingTimer($this->buildingStatue,
+            ['initial' => 25, 'evolution' => 1.2],
+            ['initial' => 220, 'evolution' => 1.26],
+            ['initial' => 220, 'evolution' => 1.275],
+            ['initial' => 220, 'evolution' => 1.26],
+            ['initial' => 10, 'evolution' => 1.17],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ]
         );
 
         $this->buildingMarket = new WorldBuilding([
@@ -244,11 +382,28 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $this->buildingMarket->save();
-        $this->createBuildingTimer($this->buildingMarket, 45, 1.2,
-            100, 1.25,
-            100, 1.275,
-            100, 1.26,
-            20, 1.17
+        $this->createBuildingTimer($this->buildingMarket,
+            ['initial' => 45, 'evolution' => 1.2],
+            ['initial' => 100, 'evolution' => 1.25],
+            ['initial' => 100, 'evolution' => 1.275],
+            ['initial' => 100, 'evolution' => 1.26],
+            ['initial' => 20, 'evolution' => 1.17],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ]
         );
 
         $this->buildingWood = new WorldBuilding([
@@ -260,11 +415,28 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $this->buildingWood->save();
-        $this->createBuildingTimer($this->buildingWood, 15, 1.2,
-            50, 1.25,
-            60, 1.275,
-            40, 1.245,
-            5, 1.155
+        $this->createBuildingTimer($this->buildingWood,
+            ['initial' => 15, 'evolution' => 1.2],
+            ['initial' => 50, 'evolution' => 1.25],
+            ['initial' => 60, 'evolution' => 1.275],
+            ['initial' => 40, 'evolution' => 1.245],
+            ['initial' => 5, 'evolution' => 1.155],
+            [
+                'hourly' => ['initial' => 30, 'evolution' => 1.17],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ]
         );
 
         $this->buildingClay = new WorldBuilding([
@@ -276,11 +448,28 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $this->buildingClay->save();
-        $this->createBuildingTimer($this->buildingClay, 15, 1.2,
-            65, 1.27,
-            50, 1.265,
-            40, 1.24,
-            10, 1.14
+        $this->createBuildingTimer($this->buildingClay,
+            ['initial' => 15, 'evolution' => 1.2],
+            ['initial' => 65, 'evolution' => 1.27],
+            ['initial' => 50, 'evolution' => 1.265],
+            ['initial' => 40, 'evolution' => 1.24],
+            ['initial' => 10, 'evolution' => 1.14],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 30, 'evolution' => 1.17],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ]
         );
 
         $this->buildingIron = new WorldBuilding([
@@ -292,11 +481,28 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $this->buildingIron->save();
-        $this->createBuildingTimer($this->buildingIron, 18, 1.2,
-            75, 1.252,
-            65, 1.275,
-            70, 1.24,
-            10, 1.17
+        $this->createBuildingTimer($this->buildingIron,
+            ['initial' => 18, 'evolution' => 1.2],
+            ['initial' => 75, 'evolution' => 1.252],
+            ['initial' => 65, 'evolution' => 1.275],
+            ['initial' => 70, 'evolution' => 1.24],
+            ['initial' => 10, 'evolution' => 1.17],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 30, 'evolution' => 1.17],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ]
         );
 
         $this->buildingFarm = new WorldBuilding([
@@ -308,11 +514,28 @@ class newTribalwarsWorld extends Command
             'default_level' => 1,
         ]);
         $this->buildingFarm->save();
-        $this->createBuildingTimer($this->buildingFarm, 20, 1.2,
-            45, 1.3,
-            40, 1.32,
-            30, 1.29,
-            0, 1
+        $this->createBuildingTimer($this->buildingFarm,
+            ['initial' => 20, 'evolution' => 1.2],
+            ['initial' => 45, 'evolution' => 1.3],
+            ['initial' => 40, 'evolution' => 1.32],
+            ['initial' => 30, 'evolution' => 1.29],
+            ['initial' => 0, 'evolution' => 1],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 240, 'evolution' => 1.17]
+            ]
         );
 
         $this->buildingWarehouse = new WorldBuilding([
@@ -324,27 +547,62 @@ class newTribalwarsWorld extends Command
             'default_level' => 1,
         ]);
         $this->buildingWarehouse->save();
-        $this->createBuildingTimer($this->buildingWarehouse, 17, 1.2,
-            60, 1.265,
-            50, 1.27,
-            40, 1.245,
-            0, 1.15
+        $this->createBuildingTimer($this->buildingWarehouse,
+            ['initial' => 17, 'evolution' => 1.2],
+            ['initial' => 60, 'evolution' => 1.265],
+            ['initial' => 50, 'evolution' => 1.27],
+            ['initial' => 40, 'evolution' => 1.245],
+            ['initial' => 0, 'evolution' => 1.15],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            ['initial' => 1000, 'evolution' => 1.229]
         );
 
         $this->buildingHide = new WorldBuilding([
             'world_id' => $world->id,
             'name' => 'Cachette',
-            'description' => 'Ce bâtiment cache vos ressources des assauts de troupes ennemies, y compris les éclaireurs.',
+            'description' => 'Ce bâtiment cache vos ressources des assauts de troupes ennemies, => y compris les éclaireurs.',
             'max_level' => 10,
             'min_level' => 0,
             'default_level' => 0,
         ]);
         $this->buildingHide->save();
-        $this->createBuildingTimer($this->buildingHide, 30, 1.2,
-            50, 1.25,
-            60, 1.25,
-            50, 1.25,
-            2, 1.17
+        $this->createBuildingTimer($this->buildingHide,
+            ['initial' => 30, 'evolution' => 1.2],
+            ['initial' => 50, 'evolution' => 1.25],
+            ['initial' => 60, 'evolution' => 1.25],
+            ['initial' => 50, 'evolution' => 1.25],
+            ['initial' => 2, 'evolution' => 1.17],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ]
         );
 
         $this->buildingWall = new WorldBuilding([
@@ -356,37 +614,114 @@ class newTribalwarsWorld extends Command
             'default_level' => 0,
         ]);
         $this->buildingWall->save();
-        $this->createBuildingTimer($this->buildingWall, 60, 1.2,
-            50, 1.26,
-            100, 1.275,
-            20, 1.26,
-            5, 1.17
+        $this->createBuildingTimer($this->buildingWall,
+            ['initial' => 60, 'evolution' => 1.2],
+            ['initial' => 50, 'evolution' => 1.26],
+            ['initial' => 100, 'evolution' => 1.275],
+            ['initial' => 20, 'evolution' => 1.26],
+            ['initial' => 5, 'evolution' => 1.17],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ],
+            [
+                'hourly' => ['initial' => 0, 'evolution' => 0],
+                'once' => ['initial' => 0, 'evolution' => 0]
+            ]
         );
     }
 
-    private function createBuildingTimer(WorldBuilding $building, int $initialTime, float $timeMultiplier, int $woodBase, float $woodEvo, int $clayBase, float $clayEvo, int $ironBase, float $ironEvo, int $farmBase, float $farmEvo) {
-        $this->info('Preparing Evolution of ' . $building->name . ' With Initial Time AT ' . $initialTime . ' And Evolution ' . $timeMultiplier);
-        $time = $initialTime;
+    private function createBuildingRessourceStorageEvo(WorldBuildingEvolution $level, int $initialStorageOnce, float $factorStorageProd) {
+        $storage = $initialStorageOnce;
+        for ($i = 0; $i <= $level->level; $i++) {
+            if ($i > 1)
+            {
+                $storage *= $factorStorageProd;
+            }
+        }
+        if ($storage <= 0)
+            return ;
+        $storageWood = new WorldBuildingStorageEvolution([
+            'world_building_evolution_id' => $level->id,
+            'world_ressource_id' => $this->ressourceWood->id,
+            'amount_per_hour' => 0,
+            'amount_once' => intval($storage),
+        ]);
+        $storageWood->save();
+        $storageClay = new WorldBuildingStorageEvolution([
+            'world_building_evolution_id' => $level->id,
+            'world_ressource_id' => $this->ressourceClay->id,
+            'amount_per_hour' => 0,
+            'amount_once' => intval($storage),
+        ]);
+        $storageClay->save();
+        $storageIron = new WorldBuildingStorageEvolution([
+            'world_building_evolution_id' => $level->id,
+            'world_ressource_id' => $this->ressourceIron->id,
+            'amount_per_hour' => 0,
+            'amount_once' => intval($storage),
+        ]);
+        $storageIron->save();
+    }
+
+    private function createBuildingRessourceProductionEvo(WorldBuildingEvolution $level, WorldRessource $ressource, int $initialProdHourly, float $factorProdHourly, int $initialProdOnce, float $factorProdOnce) {
+        $hourly = $initialProdHourly;
+        $once = $initialProdOnce;
+        for ($i = 0; $i <= $level->level; $i++) {
+            if ($i > 1)
+            {
+                $hourly *= $factorProdHourly;
+                $once *= $factorProdOnce;
+            }
+        }
+
+        if ($once <= 0 && $hourly <= 0)
+            return ;
+
+        $production = new WorldBuildingProductionEvolution([
+            'world_building_evolution_id' => $level->id,
+            'world_ressource_id' => $ressource->id,
+            'amount_per_hour' => intval($hourly),
+            'amount_once' => intval($once),
+        ]);
+        $production->save();
+    }
+
+    private function createBuildingTimer(WorldBuilding $building, array $time, array $wood, array $clay, array $iron, array $farm, array $prodWood, array $prodClay, array $prodIron, array $prodFarm, array $storage = ['initial' => 0, 'evolution' => 0]) {
+        $this->info('Preparing Evolution of ' . $building->name . ' With Initial Time AT ' . $time['initial'] . ' And Evolution ' . $time['evolution']);
+        $t = $time['initial'];
         for ($i = $building->min_level; $i <= $building->max_level; $i++) {
             if ($i >= 1)
-                $time *= $timeMultiplier;
+                $t *= $time['evolution'];
             $this->info('Creating evolution for ' . $building->name . ' level ' . $i . ' with time ' . intval($time));
 
             $level = new WorldBuildingEvolution([
                 'world_building_id' => $building->id,
                 'level' => $i,
-                'duration' => intval($time),
+                'duration' => intval($t),
             ]);
             $level->save();
-            $this->createBuildingRessourceEvo($level, $this->ressourceWood, $woodBase, $woodEvo);
-            $this->createBuildingRessourceEvo($level, $this->ressourceClay, $clayBase, $clayEvo);
-            $this->createBuildingRessourceEvo($level, $this->ressourceIron, $ironBase, $ironEvo);
-            $this->createBuildingRessourceEvo($level, $this->ressourceFarm, $farmBase, $farmEvo, true);
-
+            $this->createBuildingRessourceEvo($level, $this->ressourceWood, $wood['initial'], $wood['evolution']);
+            $this->createBuildingRessourceEvo($level, $this->ressourceClay, $clay['initial'], $clay['evolution']);
+            $this->createBuildingRessourceEvo($level, $this->ressourceIron, $iron['initial'], $iron['evolution']);
+            $this->createBuildingRessourceEvo($level, $this->ressourceFarm, $farm['initial'], $farm['evolution'], true);
+            $this->createBuildingRessourceProductionEvo($level, $this->ressourceWood, $prodWood['hourly']['initial'], $prodWood['hourly']['evolution'], $prodWood['once']['initial'], $prodWood['once']['evolution']);
+            $this->createBuildingRessourceProductionEvo($level, $this->ressourceIron, $prodIron['hourly']['initial'], $prodIron['hourly']['evolution'], $prodIron['once']['initial'], $prodIron['once']['evolution']);
+            $this->createBuildingRessourceProductionEvo($level, $this->ressourceClay, $prodClay['hourly']['initial'], $prodClay['hourly']['evolution'], $prodClay['once']['initial'], $prodClay['once']['evolution']);
+            $this->createBuildingRessourceProductionEvo($level, $this->ressourceFarm, $prodFarm['hourly']['initial'], $prodFarm['hourly']['evolution'], $prodFarm['once']['initial'], $prodFarm['once']['evolution']);
+            $this->createBuildingRessourceStorageEvo($level, $storage['initial'], $storage['evolution']);
         }
     }
 
-    public function createBuildingRessourceEvo(WorldBuildingEvolution $evolution, WorldRessource $ressources, int $initialNeed, float $multiplicator, bool $isFarm = false): WorldBuildingCostEvolution {
+    public function createBuildingRessourceEvo(WorldBuildingEvolution $evolution, WorldRessource $ressources, int $initialNeed, float $multiplicator, bool $isFarm = false) {
         $totalNeed = $farmNeed = $initialNeed;
         for ($i = 0; $i <= $evolution->level; $i++) {
             if ($i > 1)
@@ -395,7 +730,8 @@ class newTribalwarsWorld extends Command
                 $totalNeed *= $multiplicator;
             }
         }
-
+        if ($totalNeed <= 0)
+            return ;
 
         $this->info("Creating cost for " . $ressources->name . " with amount " . intval($totalNeed) . " for level " . $evolution->level);
         if ($isFarm)
@@ -409,7 +745,6 @@ class newTribalwarsWorld extends Command
             'amount' => intval($totalNeed),
         ]);
         $cost->save();
-        return $cost;
     }
 
     /**

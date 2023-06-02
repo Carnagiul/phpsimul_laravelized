@@ -11,6 +11,13 @@ class WorldBuildingStorageEvolution extends Model
 
     public static $morph = 'world_building_storage_evolution';
 
+    protected $fillable = [
+        'world_building_evolution_id',
+        'world_ressource_id',
+        'amount_per_hour',
+        'amount_once',
+    ];
+
     public function buildingEvolution()
     {
         return $this->belongsTo(WorldBuildingEvolution::class);
