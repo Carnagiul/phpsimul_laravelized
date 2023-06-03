@@ -73,7 +73,7 @@ class WorldInterface extends Controller
         return $this->canRegisterInWorld($world) && !$this->userExistInWorld($world, $user);
     }
 
-    public function getUserExistInWorld(World $world, User $user)
+    public function userExistInWorld(World $world, User $user)
     {
         return WorldUser::where('world_id', $world->id)->where('user_id', $user->id)->exists();
     }
