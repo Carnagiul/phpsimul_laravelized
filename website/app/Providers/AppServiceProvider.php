@@ -8,6 +8,7 @@ use App\Models\WorldBuilding;
 use App\Models\WorldNode;
 use App\Models\WorldRessource;
 use App\Models\WorldUser;
+use App\Observers\WorldNodeObserver;
 use App\Observers\WorldUserObserver;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
@@ -41,5 +42,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         WorldUser::observe(WorldUserObserver::class);
+        WorldNode::observe(WorldNodeObserver::class);
     }
 }
