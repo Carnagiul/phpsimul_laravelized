@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Models\World;
 use Illuminate\Console\Command;
 
-class listWorlds extends Command
+class worldList extends Command
 {
     /**
      * The name and signature of the console command.
