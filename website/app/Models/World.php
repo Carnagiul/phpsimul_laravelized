@@ -23,7 +23,7 @@ class World extends Model
     ];
     public function worldUsers()
     {
-        return $this->belongsToMany(WorldUser::class, 'world_user');
+        return $this->hasMany(WorldUser::class);
     }
 
     public function buildings()

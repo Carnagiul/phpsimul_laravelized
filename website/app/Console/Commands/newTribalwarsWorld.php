@@ -29,7 +29,6 @@ class newTribalwarsWorld extends Command
     private $buildingBarack;
     private $buildingStable;
     private $buildingWorkshop;
-
     private $buildingFarm;
     private $buildingWarehouse;
     private $buildingWood;
