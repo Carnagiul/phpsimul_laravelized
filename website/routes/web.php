@@ -35,6 +35,7 @@ Route::group([
     Route::group([
         'as' => 'world.',
         'prefix' => 'world{world}',
+        'middleware' => 'world',
     ], function () {
         Route::get('/', [WorldController::class, 'home'])->name('home');
         Route::get('/register', [WorldController::class, 'register'])->name('register');

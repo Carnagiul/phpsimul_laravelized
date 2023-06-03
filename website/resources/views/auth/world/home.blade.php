@@ -10,6 +10,9 @@
       <h5 class="card-title">Welcome on World {{$world->name}}</h5>
       <p class="card-text">This is the description of the world : <br /> {{$world->description}}.
       </p>
+
     </div>
   </div>
+
+    @include('auth.world.user.info')
 @endsection

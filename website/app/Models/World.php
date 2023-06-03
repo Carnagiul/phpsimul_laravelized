@@ -34,4 +34,9 @@ class World extends Model
     public function ressources() {
         return $this->hasMany(WorldRessource::class);
     }
+
+    public function nodes()
+    {
+        return $this->hasMany(WorldNode::class);
+    }
 }

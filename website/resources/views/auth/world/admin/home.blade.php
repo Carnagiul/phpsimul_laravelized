@@ -10,6 +10,7 @@
       <h5 class="card-title">Welcome on Administration of world {{$world->name}}</h5>
       <p class="card-text">This is the description of the world : <br /> {{$world->description}}.
       </p>
+      @dd($worldUser)
     </div>
   </div>
 @endsection

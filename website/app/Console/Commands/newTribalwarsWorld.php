@@ -696,12 +696,12 @@ class newTribalwarsWorld extends Command
     }
 
     private function createBuildingTimer(WorldBuilding $building, array $time, array $wood, array $clay, array $iron, array $farm, array $prodWood, array $prodClay, array $prodIron, array $prodFarm, array $storage = ['initial' => 0, 'evolution' => 0]) {
-        $this->info('Preparing Evolution of ' . $building->name . ' With Initial Time AT ' . $time['initial'] . ' And Evolution ' . $time['evolution']);
+        // $this->info('Preparing Evolution of ' . $building->name . ' With Initial Time AT ' . $time['initial'] . ' And Evolution ' . $time['evolution']);
         $t = $time['initial'];
         for ($i = $building->min_level; $i <= $building->max_level; $i++) {
             if ($i >= 1)
                 $t *= $time['evolution'];
-            $this->info('Creating evolution for ' . $building->name . ' level ' . $i . ' with time ' . intval($time));
+            // $this->info('Creating evolution for ' . $building->name . ' level ' . $i . ' with time ' . intval($time));
 
             $level = new WorldBuildingEvolution([
                 'world_building_id' => $building->id,
@@ -733,10 +733,10 @@ class newTribalwarsWorld extends Command
         if ($totalNeed <= 0)
             return ;
 
-        $this->info("Creating cost for " . $ressources->name . " with amount " . intval($totalNeed) . " for level " . $evolution->level);
+        // $this->info("Creating cost for " . $ressources->name . " with amount " . intval($totalNeed) . " for level " . $evolution->level);
         if ($isFarm)
             $totalNeed -= $farmNeed;
-        $this->info("Creating cost for " . $ressources->name . " with amount " . intval($totalNeed) . " for level " . $evolution->level);
+        // $this->info("Creating cost for " . $ressources->name . " with amount " . intval($totalNeed) . " for level " . $evolution->level);
 
 
         $cost = new WorldBuildingCostEvolution([

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class WorldUser extends Pivot
@@ -17,5 +18,10 @@ class WorldUser extends Pivot
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function nodes()
+    {
+        return $this->morphMany(WorldNode::class, "owner");
     }
 }
