@@ -89,7 +89,6 @@ class WorldInterface extends Controller
         $worldUser->world_id = $world->id;
         $worldUser->user_id = $user->id;
         $worldUser->save();
-        // dd($worldNode);
     }
 
     public function createNodeOnWorldUser(World $world, WorldUser $worldUser) {

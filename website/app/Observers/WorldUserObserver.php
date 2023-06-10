@@ -16,7 +16,9 @@ class WorldUserObserver
     public function created(WorldUser $worldUser)
     {
         //
-
+        if ($worldUser->nodes->count() == 0) {
+            $worldUser = app(WorldInterface::class)->createNodeOnWorldUser($worldUser->world, $worldUser);
+        }
 
     }
 
