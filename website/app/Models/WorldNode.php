@@ -11,6 +11,52 @@ class WorldNode extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public static $morph = 'world_node';
+
+    protected $casts = [
+        'id' => 'integer',
+        'world_id' => 'integer',
+        'owner_id' => 'integer',
+        'owner_type' => 'string',
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
+        'w' => 'integer',
+        'x' => 'integer',
+        'y' => 'integer',
+        'z' => 'integer',
+    ];
+
+    protected $fillable = [
+        'world_id',
+        'owner_type',
+        'owner_id',
+        'name',
+        'w',
+        'x',
+        'y',
+        'z',
+    ];
+
+    public function world()
+    {
+        return $this->belongsTo(World::class);
+    }
+
+    public function owner()
+    {
+        return $this->morphTo()->nullable();
+    }
+
+    public function buildings()
+    {
+        return $this->hasMany(WorldNodeBuilding::class);
+    }
+
+    public function ressources()
+    {
+        return $this->hasMany(WorldNodeRessource::class);
+    }
 
     public static function countPotentialVillagePositions($radius = 100) {
         $squareSide = $radius * 2; // Longueur du côté du carré englobant le cercle
@@ -57,42 +103,4 @@ class WorldNode extends Model
         }
         return $pos;
     }
-
-    public static $morph = 'world_node';
-
-    protected $casts = [
-        'id' => 'integer',
-        'world_id' => 'integer',
-        'owner_id' => 'integer',
-        'owner_type' => 'string',
-        'created_at' => 'datetime:Y-m-d H:i:s',
-        'updated_at' => 'datetime',
-        'deleted_at' => 'datetime',
-        'w' => 'integer',
-        'x' => 'integer',
-        'y' => 'integer',
-        'z' => 'integer',
-    ];
-
-    protected $fillable = [
-        'world_id',
-        'owner_type',
-        'owner_id',
-        'name',
-        'w',
-        'x',
-        'y',
-        'z',
-    ];
-
-    public function world()
-    {
-        return $this->belongsTo(World::class);
-    }
-
-    public function owner()
-    {
-        return $this->morphTo()->nullable();
-    }
-
 }

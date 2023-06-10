@@ -73,6 +73,7 @@ class newTribalwarsWorld extends Command
             'name' => 'wood',
             'world_id' => $world->id,
             'description' => 'wood is a ressource',
+            'default_amount' => '1000',
         ]);
         $this->ressourceWood->save();
 
@@ -80,6 +81,7 @@ class newTribalwarsWorld extends Command
             'name' => 'clay',
             'world_id' => $world->id,
             'description' => 'clay is a ressource',
+            'default_amount' => '1000',
         ]);
         $this->ressourceClay->save();
 
@@ -87,6 +89,7 @@ class newTribalwarsWorld extends Command
             'name' => 'iron',
             'world_id' => $world->id,
             'description' => 'iron is a ressource',
+            'default_amount' => '1000',
         ]);
         $this->ressourceIron->save();
 
@@ -94,6 +97,7 @@ class newTribalwarsWorld extends Command
             'name' => 'gold',
             'world_id' => $world->id,
             'description' => 'gold is a ressource',
+            'default_amount' => '0',
         ]);
         $this->ressourceGold->save();
 
@@ -101,6 +105,7 @@ class newTribalwarsWorld extends Command
             'name' => 'food',
             'world_id' => $world->id,
             'description' => 'food is a ressource',
+            'default_amount' => '240',
         ]);
         $this->ressourceFarm->save();
 

@@ -17,9 +17,14 @@ class WorldRessource extends Model
         'world_id',
         'name',
         'description',
+        'default_amount',
     ];
 
     public function world() {
         return $this->belongsTo(World::class);
+    }
+
+    public function nodes() {
+        return $this->hasMany(WorldNodeRessource::class);
     }
 }

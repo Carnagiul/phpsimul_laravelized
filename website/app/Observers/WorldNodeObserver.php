@@ -2,7 +2,12 @@
 
 namespace App\Observers;
 
+use App\Http\Controllers\WorldNodeRessourceInterface;
 use App\Models\WorldNode;
+use App\Models\WorldNodeBuilding;
+use App\Models\WorldNodeRessource;
+use App\Models\WorldRessource;
+use Illuminate\Support\Facades\Schema;
 
 class WorldNodeObserver
 {
@@ -14,7 +19,22 @@ class WorldNodeObserver
      */
     public function created(WorldNode $worldNode)
     {
-        //
+        if (Schema::hasTable('world_node_buildings')) {
+            foreach ($worldNode->world->buildings as $building) {
+                WorldNodeBuilding::create([
+                    'world_node_id' => $worldNode->id,
+                    'world_building_id' => $building->id,
+                    'level' => $building->default_level,
+                ]);
+            }
+        }
+
+        if (Schema::hasTable('world_node_ressources')) {
+            app(WorldNodeRessourceInterface::class)->generateDefaultRessourceOnVillage($worldNode);
+            // app(App\Http\Controllers\WorldNodeRessourceInterface::class)->generateDefaultRessourceOnVillage($node);
+        }
+
+            //
     }
 
     /**
