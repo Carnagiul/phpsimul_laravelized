@@ -19,6 +19,7 @@ class CreateWorldRessourcesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('world_id');
             $table->string('name', 50);
+            $table->string('type', 50);
             $table->longText('description')->nullable();
             $table->integer('default_amount')->default(0);
             $table->timestamps();

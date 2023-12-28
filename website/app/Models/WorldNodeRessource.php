@@ -18,7 +18,7 @@ class WorldNodeRessource extends Model
     ];
 
     protected $casts = [
-        'amount' => 'integer',
+        'amount' => 'float',
     ];
 
     protected $hidden = [

@@ -16,6 +16,7 @@ class WorldRessource extends Model
     protected $fillable = [
         'world_id',
         'name',
+        'type',
         'description',
         'default_amount',
     ];

@@ -72,6 +72,7 @@ class newTribalwarsWorld extends Command
         $this->ressourceWood = new WorldRessource([
             'name' => 'wood',
             'world_id' => $world->id,
+            'type' => 'node',
             'description' => 'wood is a ressource',
             'default_amount' => '1000',
         ]);
@@ -79,6 +80,7 @@ class newTribalwarsWorld extends Command
 
         $this->ressourceClay = new WorldRessource([
             'name' => 'clay',
+            'type' => 'node',
             'world_id' => $world->id,
             'description' => 'clay is a ressource',
             'default_amount' => '1000',
@@ -87,6 +89,7 @@ class newTribalwarsWorld extends Command
 
         $this->ressourceIron = new WorldRessource([
             'name' => 'iron',
+            'type' => 'node',
             'world_id' => $world->id,
             'description' => 'iron is a ressource',
             'default_amount' => '1000',
@@ -95,6 +98,7 @@ class newTribalwarsWorld extends Command
 
         $this->ressourceGold = new WorldRessource([
             'name' => 'gold',
+            'type' => 'player',
             'world_id' => $world->id,
             'description' => 'gold is a ressource',
             'default_amount' => '0',
@@ -103,6 +107,7 @@ class newTribalwarsWorld extends Command
 
         $this->ressourceFarm = new WorldRessource([
             'name' => 'food',
+            'type' => 'node',
             'world_id' => $world->id,
             'description' => 'food is a ressource',
             'default_amount' => '240',

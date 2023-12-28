@@ -17,7 +17,7 @@ class CreateWorldNodeRessourcesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('world_node_id');
             $table->unsignedBigInteger('world_ressource_id');
-            $table->integer('amount');
+            $table->float('amount');
 
             $table->foreign('world_node_id')->references('id')->on('world_nodes')->onDelete('cascade');
             $table->foreign('world_ressource_id')->references('id')->on('world_ressources')->onDelete('cascade');

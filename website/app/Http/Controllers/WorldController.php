@@ -14,6 +14,8 @@ class WorldController extends Controller
         $worldUser = app(WorldInterface::class)->getUserInWorld($world, Auth::user());
         if ($worldUser->nodes->count() == 0) {
             $worldUser = app(WorldInterface::class)->createNodeOnWorldUser($world, $worldUser);
+        } else {
+            return redirect(route('auth.world.node.home', [$world, $worldUser->nodes->first()]));
         }
         return view('auth.world.home', ['world' => $world]);
     }

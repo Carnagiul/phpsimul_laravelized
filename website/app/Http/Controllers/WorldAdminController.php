@@ -56,7 +56,9 @@ class WorldAdminController extends Controller
     }
 
     public function viewBuilding(World $world, WorldBuilding $building) {
-        dd([$world, $building]);
+        $building->load(['evolutions', 'evolutions.costs']);
+        return view('auth.world.admin.buildings.view', ['world' => $world, 'building' => $building]);
+
     }
 
     public function ressources(World $world) {

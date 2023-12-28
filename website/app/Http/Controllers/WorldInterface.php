@@ -93,7 +93,6 @@ class WorldInterface extends Controller
 
     public function createNodeOnWorldUser(World $world, WorldUser $worldUser) {
         $pos = WorldNode::findNewCoords($world);
-
         $worldNode = new WorldNode([
             'world_id' => $world->id,
             'owner_id' => $worldUser->id,

@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Http\Controllers\WorldInterface;
 use App\Models\WorldNode;
 use App\Models\WorldUser;
 

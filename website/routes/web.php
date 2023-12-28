@@ -3,9 +3,8 @@
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\WorldAdminController;
 use App\Http\Controllers\WorldController;
-use App\Models\World;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\WorldNodeBuildingInterface;
+use App\Http\Controllers\WorldNodeInterface;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +38,13 @@ Route::group([
     ], function () {
         Route::get('/', [WorldController::class, 'home'])->name('home');
         Route::get('/register', [WorldController::class, 'register'])->name('register');
+        Route::group([
+            'as' => 'node.',
+            'prefix' => 'node/{node}',
+        ], function() {
+            Route::get('', [WorldNodeInterface::class, 'nodeHome'])->name('home');
+            Route::get('build', [WorldNodeBuildingInterface::class, 'evolve'])->name('building.evolve');
+        });
         Route::group([
             'as' => 'admin.',
             'prefix' => 'admin',

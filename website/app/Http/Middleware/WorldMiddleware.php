@@ -30,14 +30,18 @@ class WorldMiddleware
         View::share('worldUser', $worldUser);
         view::share('world', $world);
         if ($worldUser != null) {
-            view::share('nodes',
-            WorldNode::where([
+            $nodes = WorldNode::where([
                 ['world_id', '=', $world->id],
                 ['owner_type', '=', WorldUser::$morph],
                 ['owner_id', '=', $worldUser->id]
             ])->with([
                 'buildings'
-            ])->get());
+            ])->get();
+            $nodes->each(function($item) {
+                $item->updateNode();
+            });
+            view::share('nodes', $nodes);
+
         }
 
         View::share('ressources', $world->ressources);

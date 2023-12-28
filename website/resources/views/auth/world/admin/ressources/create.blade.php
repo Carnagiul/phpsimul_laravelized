@@ -16,12 +16,12 @@
 @csrf
 
 <div class="form-group">
-    <label for="name">Name of building</label>
+    <label for="name">Name of ressource</label>
     <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" @if (isset($ressource)) value="{{$ressource->name}}" @endif>
 </div>
 
 <div class="form-group">
-    <label for="name">Description of building</label>
+    <label for="name">Description of ressource</label>
     <textarea class="form-control" id="description" name="description" placeholder="Enter Description" >@if (isset($ressource)){{$ressource->description}}@endif</textarea>
 </div>
 <center><button type="submit" class="btn btn-primary">Submit</button></center>

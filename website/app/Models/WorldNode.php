@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Doctrine\Inflector\Rules\Word;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -58,12 +59,31 @@ class WorldNode extends Model
         return $this->hasMany(WorldNodeRessource::class);
     }
 
+    public function updateNode()
+    {
+        $lastUpdate = $this->updated_at;
+        $now = now();
+        $diff = $now->diffInSeconds($lastUpdate);
+        if ($diff > 0) {
+            $this->buildings->each(function($item) use ($diff) {
+                WorldBuildingEvolution::where('world_building_id', '=', $item->world_building_id)->where('level', '=', $item->level)->get()->each(function($evolution) use ($item, $diff) {
+                    $this->ressources->each(function($ressource) use ($evolution, $diff) {
+                        WorldBuildingProductionEvolution::where('world_building_evolution_id', '=', $evolution->id)->where('world_ressource_id', '=', $ressource->world_ressource_id)->get()->each(function($evolutionRessource) use ($ressource, $diff) {
+                            $ressource->amount += ( $evolutionRessource->amount_per_hour / 3600 ) * $diff;
+                            $ressource->save();
+                        });
+                    });
+                });
+            });
+            $this->updated_at = $now;
+            $this->save();
+        }
+
+    }
+
     public static function countPotentialVillagePositions($radius = 100) {
         $squareSide = $radius * 2; // Longueur du côté du carré englobant le cercle
-        $gridSize = ceil($squareSide / ($radius * 2)); // Taille de la grille (nombre de positions possibles)
-        $potentialPositions = pow($gridSize, 2); // Nombre total de positions possibles
-
-        return $potentialPositions;
+        return $squareSide;
     }
 
     public static function calcPercentUsage($villageCount, $radius = 100) {
@@ -88,10 +108,10 @@ class WorldNode extends Model
     }
 
     public static function findNewCoords(World $world) {
-        $radius = 4;
-        $calculated_percentage = self::calcPercentUsage($world->nodes->count(), $radius);
+        $radius = 1;
+        $calculated_percentage = 1;
         while ($calculated_percentage > 0.4) {
-            $radius += 4;
+            $radius += 2;
             $calculated_percentage = self::calcPercentUsage($world->nodes->count(), $radius);
         }
 

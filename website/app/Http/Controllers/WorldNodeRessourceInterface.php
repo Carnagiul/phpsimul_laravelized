@@ -27,13 +27,15 @@ class WorldNodeRessourceInterface extends Controller
             if ($ressExist) {
                 echo " already exist\n";
             } else {
-                echo " not exist and so we created id\n";
-                $ressourceCreated = new WorldNodeRessource([
-                    'world_node_id' => $node->id,
-                    'world_ressource_id' => $ressource->id,
-                    'amount' => $ressource->default_amount,
-                ]);
-                $ressourceCreated->save();
+                if ($ressource->type == 'node') {
+                    echo " not exist and so we created id\n";
+                    $ressourceCreated = new WorldNodeRessource([
+                        'world_node_id' => $node->id,
+                        'world_ressource_id' => $ressource->id,
+                        'amount' => $ressource->default_amount,
+                    ]);
+                    $ressourceCreated->save();
+                }
             }
         }
     }
