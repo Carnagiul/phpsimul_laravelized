@@ -15,6 +15,11 @@
         @show
     </head>
     <body>
+        @if (session('popup-success'))
+            <div class="alert alert-success">
+                {{ session('popup-success') }}
+            </div>
+        @endif
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
               <a class="navbar-brand" href="{{route('auth.home')}}">PHPSIMUL</a>
@@ -53,6 +58,27 @@
               </div>
             </div>
           </nav>
+
+          <div class="card text-dark bg-light mb-12">
+            <div class="card-header">Village {{$node->name}} {{$node->x . "|" . $node->y}}  [{{$node->updated_at}}]</div>
+            <div class="card-body">
+              <h5 class="card-title">Vos ressources sur ce village</h5>
+              <p class="card-text">
+
+                @foreach ($ressources as $ressource)
+
+                    @foreach ($node->ressources as $ress)
+                        @if ($ress->world_ressource_id == $ressource->id && $ressource->type == "node")
+                        <span class="ressource prodress_{{$ress->world_ressource_id}}" data-id="{{$ress->world_ressource_id}}">
+                            <span class="ressource_name">{{$ressource->name}}</span> <span class="ressource_amount ress_{{$ress->world_ressource_id}}">{{$ress->amount}}</span> &nbsp;
+                        </span>
+                        @break
+                        @endif
+                    @endforeach
+                @endforeach
+              </p>
+            </div>
+          </div>
         @section('page')
         @show
     </body>
@@ -61,6 +87,37 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
         @section('scripts')
+        <script>
+        // Fonction pour mettre à jour la div
+            function updateDiv() {
+                // Faire une requête AJAX vers votre route Laravel
+                fetch('{{ route("auth.world.node.nodeRess", ["world" => $world->id, "node" => $node->id]) }}')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erreur lors de la requête AJAX');
+                        }
+
+                        return response.json();
+                    })
+                    .then(data => {
+                        var datas = data
+                        for (const ress of datas) {
+                            document.querySelector(".ress_" + ress.world_ressource_id).innerHTML = ress.amount;
+                            if (ress.prod != undefined && ress.prod != null) {
+                                document.querySelector(".prodress_" + ress.world_ressource_id).setAttribute('title', ress.prod + "/H")
+                                document.querySelector(".prodress_" + ress.world_ressource_id).setAttribute('alt', ress.prod + "/H")
+
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la requête AJAX', error);
+                    });
+            }
+
+            // Appeler la fonction updateDiv toutes les secondes (1000 millisecondes)
+            setInterval(updateDiv, 1000);
+        </script>
         @show
     </footer>
 </html>

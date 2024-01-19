@@ -35,4 +35,8 @@ class WorldBuildingEvolution extends Model
     public function productions() {
         return $this->hasMany(WorldBuildingProductionEvolution::class);
     }
+
+    public function next() {
+        return WorldBuildingEvolution::where('world_building_id', $this->world_building_id)->where('level', $this->level + 1)->get()->first();
+    }
 }

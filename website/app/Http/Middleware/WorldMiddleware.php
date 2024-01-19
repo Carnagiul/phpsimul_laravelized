@@ -25,6 +25,9 @@ class WorldMiddleware
         $user = Auth::user();
         $world = $request->route('world');
 
+        if (!($world instanceof World)) {
+            $world = World::where('id', $world)->get()->first();
+        }
         $worldUser = WorldUser::where('world_id', '=', $world->id)->where('user_id', '=', $user->id)->with(['nodes', 'nodes.buildings'])->get()->first();
         $request->session()->put('world_user', $worldUser);
         View::share('worldUser', $worldUser);
@@ -34,8 +37,6 @@ class WorldMiddleware
                 ['world_id', '=', $world->id],
                 ['owner_type', '=', WorldUser::$morph],
                 ['owner_id', '=', $worldUser->id]
-            ])->with([
-                'buildings'
             ])->get();
             $nodes->each(function($item) {
                 $item->updateNode();
@@ -45,7 +46,7 @@ class WorldMiddleware
         }
 
         View::share('ressources', $world->ressources);
-        View::share('buildings', WorldBuilding::where('world_id', '=', $world->id)->with(['evolutions', 'evolutions.costs', 'evolutions.productions', 'evolutions.storages'])->get());
+        View::share('buildings', WorldBuilding::where('world_id', '=', $world->id)->get());
 
         return $next($request);
     }

@@ -79,6 +79,33 @@ class WorldNode extends Model
             $this->save();
         }
 
+        if ($this->buildingQueue->count() > 0) {
+            $buildingDiff = $diff;
+            while ($buildingDiff > 0) {
+                foreach ($this->buildingQueue as $queued) {
+                    if ($queued->remaining > $buildingDiff) {
+                        $queued->remaining = $queued->remaining - $buildingDiff;
+                        $queued->save();
+                        $buildingDiff = 0;
+                        break ;
+                    } else {
+                        $buildingDiff -= $queued->remaining;
+                        $queued->remaining = 0;
+                        $building = $this->buildings()->where('world_building_id', $queued->world_building_id)->get()->first();
+                        $building->level = $queued->level;
+                        $building->save();
+                        $queued->save();
+                    }
+                }
+                break ;
+            }
+            $this->buildingQueue()->where('remaining', 0)->delete();
+            $this->buildingQueue()->orderBy('position')->get()->map(function($item, $index){
+                $item->position = $index;
+                $item->save();
+            });
+
+        }
     }
 
     public static function countPotentialVillagePositions($radius = 100) {
@@ -122,5 +149,9 @@ class WorldNode extends Model
                 break ;
         }
         return $pos;
+    }
+
+    public function buildingQueue() {
+        return $this->hasMany(WorldNodeBuildingQueue::class);
     }
 }

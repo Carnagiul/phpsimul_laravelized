@@ -3,6 +3,8 @@
 namespace App\Http;
 
 use App\Http\Middleware\WorldMiddleware;
+use App\Http\Middleware\WorldNodeMiddleware;
+use App\Models\WorldNode;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -67,5 +69,6 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\UserAdminMiddleware::class,
         'dev' => \App\Http\Middleware\DevWorldMiddleware::class,
         'world' => WorldMiddleware::class,
+        'worldNode' => WorldNodeMiddleware::class,
     ];
 }

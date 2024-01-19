@@ -32,4 +32,7 @@ class WorldBuilding extends Model
         return $this->hasMany(WorldBuildingEvolution::class);
     }
 
+    public function inQueue() {
+        return $this->hasMany(WorldNodeBuildingQueue::class, 'world_building_id');
+    }
 }

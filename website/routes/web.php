@@ -41,9 +41,23 @@ Route::group([
         Route::group([
             'as' => 'node.',
             'prefix' => 'node/{node}',
+            'middleware' => 'worldNode',
         ], function() {
             Route::get('', [WorldNodeInterface::class, 'nodeHome'])->name('home');
-            Route::get('build', [WorldNodeBuildingInterface::class, 'evolve'])->name('building.evolve');
+            Route::get('nodeRess', [WorldNodeInterface::class, 'nodeRess'])->name('nodeRess');
+            Route::group([
+                'as' => 'building.',
+                'prefix' => 'building',
+            ], function() {
+                Route::get('', [WorldNodeBuildingInterface::class, 'list'])->name('list');
+                Route::group([
+                    'as' => 'actions.',
+                    'prefix' => 'building{building}',
+                ], function() {
+                    Route::get('evolve', [WorldNodeBuildingInterface::class, 'evolve'])->name('evolve');
+                });
+            });
+            Route::get('building_{building}', [WorldNodeBuildingInterface::class, 'evolve'])->name('building.evolve');
         });
         Route::group([
             'as' => 'admin.',
