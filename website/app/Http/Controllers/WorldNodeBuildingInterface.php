@@ -27,13 +27,12 @@ class WorldNodeBuildingInterface extends Controller
                 break ;
         }
 
-        if ($valid) {
-            foreach ($next->costs as $cost) {
-                $valid = app(WorldNodeInterface::class)->removeRessource($node, $cost);
-                if ($valid == false)
-                    break ;
-            }
+        if (!$valid) {
+            return redirect()->route('auth.world.node.building.list', ['world' => $world->id, 'node' => $node->id])->with('popup-error', "Le batiment " . $building->name . " n'a pas ete place en construction car il manque des ressources");
+
         }
+        foreach ($next->costs as $cost)
+            app(WorldNodeInterface::class)->removeRessource($node, $cost);
 
         $queue = new WorldNodeBuildingQueue();
         $queue->world_node_id = $node->id;

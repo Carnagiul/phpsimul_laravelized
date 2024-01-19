@@ -58,7 +58,7 @@
               </div>
             </div>
           </nav>
-
+          @if (!Route::is('auth.world.admin.*'))
           <div class="card text-dark bg-light mb-12">
             <div class="card-header">Village {{$node->name}} {{$node->x . "|" . $node->y}}  [{{$node->updated_at}}]</div>
             <div class="card-body">
@@ -79,16 +79,16 @@
               </p>
             </div>
           </div>
+        @endif
         @section('page')
         @show
     </body>
     <footer>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-
-        @section('scripts')
+        @if (!Route::is('auth.world.admin.*'))
         <script>
-        // Fonction pour mettre à jour la div
+            // Fonction pour mettre à jour la div
             function updateDiv() {
                 // Faire une requête AJAX vers votre route Laravel
                 fetch('{{ route("auth.world.node.nodeRess", ["world" => $world->id, "node" => $node->id]) }}')
@@ -118,6 +118,9 @@
             // Appeler la fonction updateDiv toutes les secondes (1000 millisecondes)
             setInterval(updateDiv, 1000);
         </script>
+        @endif
+
+        @section('scripts')
         @show
     </footer>
 </html>

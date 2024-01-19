@@ -9,6 +9,7 @@ use App\Models\WorldBuildingEvolution;
 use App\Models\WorldNode;
 use App\Models\WorldRessource;
 use App\Models\WorldUser;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class WorldNodeInterface extends Controller
@@ -58,5 +59,16 @@ class WorldNodeInterface extends Controller
             }
         });
         return $actual;
+    }
+
+    public function nodeBuildQueue(World $world, WorldNode $node) {
+        $elapsedAt = 0;
+        foreach ($node->buildingQueue as $queue) {
+            $queue->parseRemainingTime = Carbon::parse($queue->remaining)->format("H:i:s");
+            $queue->parseEndAt = Carbon::parse($queue->remaining + $elapsedAt)->format("H:i:s");
+            $queue->buildingName = $queue->building->name;
+            $elapsedAt += $queue->remaining;
+        }
+        return $node->buildingQueue;
     }
 }

@@ -45,6 +45,7 @@ Route::group([
         ], function() {
             Route::get('', [WorldNodeInterface::class, 'nodeHome'])->name('home');
             Route::get('nodeRess', [WorldNodeInterface::class, 'nodeRess'])->name('nodeRess');
+            Route::get('nodeBuildQueue', [WorldNodeInterface::class, 'nodeBuildQueue'])->name('nodeBuildQueue');
             Route::group([
                 'as' => 'building.',
                 'prefix' => 'building',
