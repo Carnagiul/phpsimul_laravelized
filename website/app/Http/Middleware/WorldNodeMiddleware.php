@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Http\Controllers\WorldNodeInterface;
+use App\Models\WorldNode;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ class WorldNodeMiddleware
         $node = $request->route('node');
         $worldUser = $request->session()->get('world_user');
 
-        if (!(app(WorldNodeInterface::class)->canAcces($node, $worldUser))) {
+        if (app(WorldNodeInterface::class)->canAcces($node, $worldUser) == false) {
             return redirect(route('auth.world.home', $world));
         }
 

@@ -22,6 +22,8 @@ class CreateWorldRessourcesTable extends Migration
             $table->string('type', 50);
             $table->longText('description')->nullable();
             $table->integer('default_amount')->default(0);
+            $table->integer('default_prod')->default(0);
+            $table->integer('default_storage')->default(0);
             $table->timestamps();
             $table->softDeletes();
 

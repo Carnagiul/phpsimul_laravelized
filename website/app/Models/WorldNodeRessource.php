@@ -15,10 +15,14 @@ class WorldNodeRessource extends Model
         'world_node_id',
         'world_ressource_id',
         'amount',
+        'storage',
+        'prod',
     ];
 
     protected $casts = [
         'amount' => 'float',
+        'storage' => 'float',
+        'prod' => 'float',
     ];
 
     protected $hidden = [

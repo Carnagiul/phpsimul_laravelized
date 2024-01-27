@@ -31,11 +31,11 @@ class WorldNodeBuilding extends Model
 
     public function node()
     {
-        return $this->belongsTo(WorldNode::class);
+        return $this->belongsTo(WorldNode::class, 'world_node_id');
     }
 
     public function building()
     {
-        return $this->belongsTo(WorldBuilding::class);
+        return $this->belongsTo(WorldBuilding::class, 'world_building_id');
     }
 }

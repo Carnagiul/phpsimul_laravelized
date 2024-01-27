@@ -33,6 +33,8 @@ class WorldNodeRessourceInterface extends Controller
                         'world_node_id' => $node->id,
                         'world_ressource_id' => $ressource->id,
                         'amount' => $ressource->default_amount,
+                        'prod' => $ressource->default_prod,
+                        'storage' => $ressource->default_storage,
                     ]);
                     $ressourceCreated->save();
                 }

@@ -59,24 +59,101 @@ class WorldNode extends Model
         return $this->hasMany(WorldNodeRessource::class);
     }
 
+    public function getAttributesMaxStorage() {
+        $storage = [];
+        $this->buildings->each(function($item) use (&$storage) {
+            WorldBuildingEvolution::where('world_building_id', '=', $item->world_building_id)->where('level', '=', $item->level)->get()->each(function($evolution) use (&$storage) {
+                if ($evolution->storages != null)
+                    $evolution->storages->each(function($store) use (&$storage) {
+                        if (isset($storage[$store->world_ressource_id]))
+                            $storage[$store->world_ressource_id] += $store->amount_once;
+                        else
+                            $storage[$store->world_ressource_id] = $store->amount_once;
+                    });
+            });
+        });
+
+
+        foreach ($storage as $key => $value) {
+            foreach ($this->ressources as $ress) {
+                if ($ress->world_ressource_id == $key) {
+                    $ress->storage = $value;
+                    $ress->save();
+                }
+            }
+        }
+
+        return $storage;
+    }
+
+    public function getAttributesRess($diff = 0) {
+        $storage = [];
+        $productions = [];
+        $producted = [];
+        $max = [];
+        $this->buildings->each(function($item) use (&$storage, &$max, &$productions, ) {
+            WorldBuildingEvolution::where('world_building_id', '=', $item->world_building_id)->where('level', '=', $item->level)->get()->each(function($evolution) use (&$storage, &$max, &$productions) {
+                if ($evolution->productions != null)
+                {
+                    $evolution->productions->each(function($store) use (&$storage, &$productions, &$max) {
+                        if (isset($productions[$store->world_ressource_id]))
+                            $productions[$store->world_ressource_id] += $store->amount_per_hour;
+                        else
+                            $productions[$store->world_ressource_id] = $store->amount_per_hour;
+                        if (isset($storage[$store->world_ressource_id]))
+                            $storage[$store->world_ressource_id] += $store->amount_once;
+                        else {
+                            if ($store->amount_once > 0)
+                                $storage[$store->world_ressource_id] = $store->amount_once;
+                        }
+
+                    });
+                }
+                if ($evolution->storages != null)
+                {
+                    $evolution->storages->each(function($store) use (&$storage) {
+                        if (isset($storage[$store->world_ressource_id]))
+                            $storage[$store->world_ressource_id] += $store->amount_once;
+                        else
+                            $storage[$store->world_ressource_id] = $store->amount_once;
+                    });
+                }
+            });
+        });
+        foreach ($this->ressources as $ress) {
+            if (isset($storage[$ress->world_ressource_id])) {
+                $ress->storage = $storage[$ress->world_ressource_id];
+            }
+            if (isset($productions[$ress->world_ressource_id])) {
+                $producted[$ress->world_ressource_id] = $diff * ($productions[$ress->world_ressource_id] / 3600);
+                $ress->prod = $productions[$ress->world_ressource_id];
+            }
+            $ress->save();
+        }
+        return ['storages' => $storage, 'prod' => $productions, 'producted' => $producted, 'max' => $max];
+
+    }
+
     public function updateNode()
     {
         $lastUpdate = $this->updated_at;
         $now = now();
         $diff = $now->diffInSeconds($lastUpdate);
-        if ($diff > 0) {
-            $this->buildings->each(function($item) use ($diff) {
-                WorldBuildingEvolution::where('world_building_id', '=', $item->world_building_id)->where('level', '=', $item->level)->get()->each(function($evolution) use ($item, $diff) {
-                    $this->ressources->each(function($ressource) use ($evolution, $diff) {
-                        WorldBuildingProductionEvolution::where('world_building_evolution_id', '=', $evolution->id)->where('world_ressource_id', '=', $ressource->world_ressource_id)->get()->each(function($evolutionRessource) use ($ressource, $diff) {
-                            $ressource->amount += ( $evolutionRessource->amount_per_hour / 3600 ) * $diff;
-                            $ressource->save();
-                        });
-                    });
-                });
-            });
-            $this->updated_at = $now;
-            $this->save();
+        $datas = $this->getAttributesRess($diff);
+        if (isset($datas['producted'])) {
+            foreach ($datas['producted'] as $key => $value) {
+                foreach($this->ressources as $ress) {
+                    if ($ress->world_ressource_id == $key) {
+                        $ress->amount += $value;
+                        if ($ress->amount < 0)
+                            $ress->amount = 0;
+                        if ($ress->amount > $ress->storage)
+                            $ress->amount = $ress->storage;
+                        $ress->save();
+                    }
+                }
+            }
+            $this->touch();
         }
 
         if ($this->buildingQueue->count() > 0) {
@@ -93,6 +170,21 @@ class WorldNode extends Model
                         $queued->remaining = 0;
                         $building = $this->buildings()->where('world_building_id', $queued->world_building_id)->get()->first();
                         $building->level = $queued->level;
+                        $evolution = WorldBuildingEvolution::where('world_building_id', $queued->world_building_id)->where('level', $queued->level)->get()->first();
+                        $ressources = $evolution->productions()->where('amount_once', '>', 0)->get();
+                        if ($ressources != null) {
+                            foreach ($ressources as $buildRess) {
+                                foreach ($this->ressources as $nodeRess) {
+                                    if ($nodeRess->world_ressource_id == $buildRess->world_ressource_id) {
+                                        $nodeRess->amount += $buildRess->amount_once;
+                                        $nodeRess->storage += $buildRess->amount_once;
+                                        $nodeRess->save();
+                                    }
+                                }
+                            }
+
+                        }
+
                         $building->save();
                         $queued->save();
                     }
@@ -104,8 +196,11 @@ class WorldNode extends Model
                 $item->position = $index;
                 $item->save();
             });
-
         }
+
+
+
+
     }
 
     public static function countPotentialVillagePositions($radius = 100) {

@@ -64,13 +64,14 @@
             <div class="card-body">
               <h5 class="card-title">Vos ressources sur ce village</h5>
               <p class="card-text">
-
+                @php
+                $storage = $node->getAttributesMaxStorage();
+                @endphp
                 @foreach ($ressources as $ressource)
-
                     @foreach ($node->ressources as $ress)
                         @if ($ress->world_ressource_id == $ressource->id && $ressource->type == "node")
                         <span class="ressource prodress_{{$ress->world_ressource_id}}" data-id="{{$ress->world_ressource_id}}">
-                            <span class="ressource_name">{{$ressource->name}}</span> <span class="ressource_amount ress_{{$ress->world_ressource_id}}">{{$ress->amount}}</span> &nbsp;
+                            <span class="ressource_name">{{$ressource->name}}</span> <span class="ressource_amount ress_{{$ress->world_ressource_id}}">{{$ress->amount}}</span>/<span class="ressource_storage ress_{{$ress->world_ressource_id}}">{{$ress->storage ?? "-"}}</span> &nbsp;
                         </span>
                         @break
                         @endif
@@ -102,7 +103,8 @@
                     .then(data => {
                         var datas = data
                         for (const ress of datas) {
-                            document.querySelector(".ress_" + ress.world_ressource_id).innerHTML = ress.amount;
+                            document.querySelector(".prodress_" + ress.world_ressource_id + " .ressource_amount").innerHTML = ress.amount;
+                            document.querySelector(".prodress_" + ress.world_ressource_id + " .ressource_storage").innerHTML = ress.storage;
                             if (ress.prod != undefined && ress.prod != null) {
                                 document.querySelector(".prodress_" + ress.world_ressource_id).setAttribute('title', ress.prod + "/H")
                                 document.querySelector(".prodress_" + ress.world_ressource_id).setAttribute('alt', ress.prod + "/H")

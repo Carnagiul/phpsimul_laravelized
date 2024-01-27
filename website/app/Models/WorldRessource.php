@@ -19,6 +19,8 @@ class WorldRessource extends Model
         'type',
         'description',
         'default_amount',
+        'default_prod',
+        'default_storage',
     ];
 
     public function world() {

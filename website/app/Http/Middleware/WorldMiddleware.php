@@ -42,7 +42,6 @@ class WorldMiddleware
                 $item->updateNode();
             });
             view::share('nodes', $nodes);
-
         }
 
         View::share('ressources', $world->ressources);
